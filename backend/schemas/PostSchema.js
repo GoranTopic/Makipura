@@ -26,9 +26,15 @@ const PostSchema = new Schema({ // create new Schma object
 				ref: 'User',
 				required: true,
 		},
-		datePosted:{
+		datePosted: {
 				type: Date,
 				default: new Date(),
+		},
+		views: {
+				type: Number ,
+		},
+		engagement: {
+				type: Number ,
 		},
 		images: {
 				type: Array,

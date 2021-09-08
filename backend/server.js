@@ -3,6 +3,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
+// import routers
+import PostRouter from "./routers/postRouter.js";
+
 // import data access objects to create connection with mondb
 // import the post Data Access Object 
 import PostDAO from "./dao/postDAO.js"; 
@@ -30,10 +33,12 @@ async function main() {
 
 		
 		// define routes to use here
-		// define routes for posts,
+		server.use('/post/', PostRouter);
 		// define routes for users,
 		// define routes for converstion 
 		// define routes for messages
+		// define a global route thath catches any get requests
+		server.use('*', (req,res) => { res.status(404).json({error: "not found"}); })
 
 
 		try {
@@ -55,8 +60,6 @@ async function main() {
 
 				//PostDAO.storePost(testPost);
 				//PostDAO.getAllPosts().then( res => console.log(res) )
-
-
 
 
 				server.listen(PORT, () => { // run app 
