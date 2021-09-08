@@ -44,7 +44,6 @@ class PostDAO {
 						else return false;
 				}catch(e){ console.error(e); return false; }
 		}
-	
 
 		static async findById(id){
 				let response;
@@ -63,7 +62,6 @@ class PostDAO {
 						else return false;
 				}catch(e){ console.error(e); return false; }
 		}
-
 
 		static async deleteById(id){
 				let response;

@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'; // import mongoose 
 const { Schema } = mongoose; // get the Schema obj from mongoose
 
-
 const PostSchema = new Schema({ // create new Schma object
 		title:{
 				type: String,
@@ -45,4 +44,7 @@ const PostSchema = new Schema({ // create new Schma object
 		},
 });
 
-export default  PostSchema;
+const  postModel = mongoose.model("Post", PostSchema);
+console.log("post model made");
+
+export default  postModel;

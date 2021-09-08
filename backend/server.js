@@ -6,17 +6,7 @@ import cors from "cors";
 // import routers
 import PostRouter from "./routers/postRouter.js";
 
-// import data access objects to create connection with mondb
-// import the post Data Access Object 
-import PostDAO from "./dao/postDAO.js"; 
-// import user data access object
-//import UserDAO from "./data_access_objecs/userDAO.js"; 
-// import conversation dao
-//import ConversationDAO from "./data_access_objecs/conversationDAO.js"; 
-// import messageDAO
-//import MessageDAO from "./data_access_objecs/messageDAO.js"; 
-
-
+// 
 const PORT = process.env.PORT || 5000;
 const DATABASE_URL = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/';
 const NAME_SPACE = process.env.NAME_SPACE || 'makipura';
@@ -46,8 +36,6 @@ async function main() {
 				await mongoose.connect( DATABASE_URL + NAME_SPACE, 
 						{ useNewUrlParser: true, useUnifiedTopology: true  } 
 				);
-				PostDAO.createModel(); // create model
-			
 
 				const testPost = { 
 						title: "Post title",

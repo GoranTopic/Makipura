@@ -1,11 +1,13 @@
-import PostDAO from  '../dao/postDAO.js';
+import postModel from "../models/PostModel.js";
 
 class PostController {
 
 		static async getHomePagePosts(req, res, next){
+				let posts;
 				try{  
-						const response = await PostDAO.getAll();
-						res.json(response);
+						posts = await postModel.find({});
+						if(posts) res.json(posts);
+						else res.status(404).json({ status: "posts not found" });
 				}catch(e){ 
 						console.error(`could not query home page posts ${e}`); 
 						res.status(500).json({ error: e  });
@@ -13,9 +15,10 @@ class PostController {
 		}
 
 		static async getAllPost(req, res, next){
+				let posts;
 				try{
-						const response = await PostDAO.getAll();
-						res.json(response);
+						posts = await postModel.find({});
+						res.json(posts);
 				}catch(e){ 
 						console.error(`could not query all posts: ${e}`); 
 						res.status(500).json({ error: e  });
@@ -24,13 +27,11 @@ class PostController {
 
 		static async getPostById(req, res, next){
 				let id = req.params.id;
+				let post;
 				try{  
-						let post = await PostDAO.findById(id);
-						if(!post){// if no post found
-								res.status(404).json({ error: `post ${id} not found` });
-								console.error(`could not query post ${id}`); 
-								return 
-						}else res.json(post);
+						post = await postModel.findById(id);
+						if(post) res.json(post);
+						else res.status(404).json({ status: "post not found" });
 				}catch(e){ 
 						console.error(`could not query post ${id}: ${e}`); 
 						res.status(500).json({ error: e  });
@@ -38,12 +39,12 @@ class PostController {
 		}
 
 		static async createNewPost(req, res, next){
-				let response;
+				let result;
+				const new_post = { ...req.body, views: 0, engagement: 0 };
 				try{
-						response = await PostDAO.store(req.body);
-						console.log(response);
-						if(response) res.json({ status: "success" });
-						else res.status(500).json({ status: response });
+						result = await postModel.create(new_post);
+						if(result) res.json({ status: "success" });
+						else res.status(500).json({ status: "faliure" });
 				}catch(e){ 
 						console.error(`Could not create post: ${e}`); 
 						res.status(500).json({ error: e });
@@ -52,15 +53,12 @@ class PostController {
 		}
 
 		static async updatePostById(req, res, next){
-				let response;
+				let result;
 				let id = req.params.id; // get the id
 				try{  
-						response = await PostDAO.updateById(id, req.body);
-						if(!response){// if no post found
-								res.status(404).json({ error: `post ${id} not found` });
-								console.error(`could not query post ${id}`); 
-								return  
-						}else res.json({ status: "success" });
+						result = await postModel.findByIdAndUpdate(id, req.body);
+						if(result) res.json({ status: "success" });
+						else res.status(404).json({ status: "faliure" });
 				}catch(e){ 
 						console.error(`could not query post ${id}: ${e}`); 
 						res.status(500).json({ error: e  });
@@ -69,21 +67,17 @@ class PostController {
 
 
 		static async deletePostById(req, res, next){
-				let response;
+				let result;
 				let id = req.params.id; // get the id
 				try{  
-						let response = await PostDAO.deleteById(id);
-						if(!response){// if no post found
-								res.status(404).json({ error: `post ${id} not found` });
-								console.error(`could not query post ${id}`); 
-								return 
-						}else res.json({ status: "success" });
+						let result = await postModel.findByIdAndDelete(id);
+						if(result) res.json({ status: "success" });
+						else res.status(404).json({ status: "faliure" });
 				}catch(e){ 
 						console.error(`could not query post ${id}: ${e}`); 
 						res.status(500).json({ error: e  });
 				}
 		}
-
 
 
 

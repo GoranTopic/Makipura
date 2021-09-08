@@ -1,9 +1,7 @@
 import express from 'express' ;
 import PostController from '../controllers/postController.js';
 
-
 const postRouter = express.Router(); // get express router
-
 
 postRouter.route('/')
 		.get(PostController.getHomePagePosts)
