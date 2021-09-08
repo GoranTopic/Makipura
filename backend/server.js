@@ -28,7 +28,8 @@ async function main() {
 		server.use(express.json()); // use json middleware 
 
 
-		// define add routes here
+		
+		// define routes to use here
 		// define routes for posts,
 		// define routes for users,
 		// define routes for converstion 
@@ -42,16 +43,21 @@ async function main() {
 				);
 				PostDAO.createModel(); // create model
 			
-				PostDAO.storePost({
+
+				const testPost = { 
 						title: "Post title",
 						description: "this is description",
 						price: 100,
 						condition: "new",
 						userid: "telix",
 						images: "~/img/image.jpg",
-				});
-				
-				PostDAO.getAllPosts().then( res => console.log(res) )
+				}
+
+				//PostDAO.storePost(testPost);
+				//PostDAO.getAllPosts().then( res => console.log(res) )
+
+
+
 
 				server.listen(PORT, () => { // run app 
 						console.log('server is running on port: ' + PORT);
