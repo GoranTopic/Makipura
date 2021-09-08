@@ -36,13 +36,23 @@ async function main() {
 
 
 		try {
-
 				// connect to database using moongose
 				await mongoose.connect( DATABASE_URL + NAME_SPACE, 
 						{ useNewUrlParser: true, useUnifiedTopology: true  } 
 				);
 				PostDAO.createModel(); // create model
+			
+				PostDAO.storePost({
+						title: "Post title",
+						description: "this is description",
+						price: 100,
+						condition: "new",
+						userid: "telix",
+						images: "~/img/image.jpg",
+				});
 				
+				PostDAO.getAllPosts().then( res => console.log(res) )
+
 				server.listen(PORT, () => { // run app 
 						console.log('server is running on port: ' + PORT);
 				});

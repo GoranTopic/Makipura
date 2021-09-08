@@ -18,9 +18,9 @@ class PostDAO {
 				/* create a post in the db */
 				postModel.create({
 						title: post.title,
-						descrition: post.descrition,
+						description: post.description,
 						price: post.price,
-						condition: posts.condition,
+						condition: post.condition,
 						userid: post.userid,
 						images: post.images,
 				});

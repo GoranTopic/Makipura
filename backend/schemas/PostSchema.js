@@ -17,11 +17,12 @@ const PostSchema = new Schema({ // create new Schma object
 		},
 		condition:{ 
 				type: String,
-				enum: [ "brand new", "slightly used", "used", "worn", "damaged" ],
+				enum: [ "brand new", "new", "slightly used", "used", "worn", "damaged" ],
 				required: true,
 		},
 		userid: {
-				type: mongoose.Schema.Types.ObjectId,
+				//type: mongoose.Schema.Types.ObjectId,
+				type: String,
 				ref: 'User',
 				required: true,
 		},
