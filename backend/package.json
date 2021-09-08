@@ -1,0 +1,35 @@
+{
+  "name": "makipura",
+  "version": "1.0.0",
+  "description": "This is the backend for a ecomerce app, Makipura. sinifica intercambio en quechua ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/nodemon/bin/nodemon.js server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoranTopic/Makipura.git"
+  },
+  "keywords": [
+    "e-trade",
+    "makipura"
+  ],
+  "author": "Goran Topic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GoranTopic/Makipura/issues"
+  },
+  "homepage": "https://github.com/GoranTopic/Makipura#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongodb": "^4.1.1",
+    "mongoose": "^6.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
