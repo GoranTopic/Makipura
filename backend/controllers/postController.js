@@ -1,6 +1,6 @@
 import postModel from "../models/postModel.js";
 
-class PostController {
+class postController {
 
 		static async getHomePagePosts(req, res, next){
 				let posts;
@@ -79,11 +79,8 @@ class PostController {
 				}
 		}
 
-
-
-
 }
 
 
-export default PostController;
+export default postController;
 

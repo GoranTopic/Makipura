@@ -1,5 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import express from "express";
+import expressSession from "express-session"
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -19,6 +20,12 @@ async function main() {
 		const server = express(); //make instance of express server
 		server.use(cors()); // use the middleware cors
 		server.use(express.json()); // use json middleware 
+		server.use(expressSession({  // define value for the session 
+				secret: 'Keyboard-cat',  
+				name: "makipura_cookie", 
+				resave: true, // for every reques to he server, resets the session cookie
+				saveUninitialized: true, // Do not save the session after is has not been modified
+		}));
 
 
 		

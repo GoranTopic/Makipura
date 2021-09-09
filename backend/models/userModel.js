@@ -12,10 +12,12 @@ const UserSchema = new Schema({ // create new Schma object
 		password: {
 				type: String,
 				required: true,
+				select: false,
 		}
 		email:{
 				type: String,
 				required: true,
+				select: false,
 				unique: true, 
 		},
 		image: {
@@ -23,6 +25,7 @@ const UserSchema = new Schema({ // create new Schma object
 		},
 });
 
+// use unquine validator
 UserSchema.plugin(uniqueValidator);
 
 // save hash the password before saving it 

@@ -1,18 +1,18 @@
 import express from 'express' ;
-import PostController from '../controllers/postController.js';
+import postController from '../controllers/postController.js';
 
 const postRouter = express.Router(); // get express router
 
 postRouter.route('/')
-		.get(PostController.getHomePagePosts)
-		.post(PostController.createNewPost)
+		.get(postController.getHomePagePosts)
+		.post(postController.createNewPost)
 
 postRouter.route('/all/:page?')
-		.get(PostController.getAllPost)
+		.get(postController.getAllPost)
 
 postRouter.route('/id/:id/')
-		.get(PostController.getPostById)
-		.put(PostController.updatePostById)
-		.delete(PostController.deletePostById);
+		.get(postController.getPostById)
+		.put(postController.updatePostById)
+		.delete(postController.deletePostById);
 
 export default postRouter;
