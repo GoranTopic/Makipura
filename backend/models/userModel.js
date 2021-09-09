@@ -1,32 +1,35 @@
 import mongoose from 'mongoose'; // import mongoose 
-import uniqueValidator from 'mongoose-unique-validator';
 import bcrypt from 'bcrypt';
 
 const { Schema } = mongoose; // get the Schema obj from mongoose
 
 const UserSchema = new Schema({ // create new Schma object
+		firstname:{
+				type: String, 
+				required: true, 
+		},
+		lastname:{
+				type: String, 
+				required: false, 
+		},
 		username:{
 				type: String,
 				required: true,
+				unique: true, 
 		},
 		password: {
 				type: String,
 				required: true,
-				select: false,
-		}
+		},
 		email:{
 				type: String,
 				required: true,
-				select: false,
 				unique: true, 
 		},
 		image: {
 				type: String,
 		},
 });
-
-// use unquine validator
-UserSchema.plugin(uniqueValidator);
 
 // save hash the password before saving it 
 UserSchema.pre('save', function(next){

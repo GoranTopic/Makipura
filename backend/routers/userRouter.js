@@ -3,7 +3,6 @@ import userController from '../controllers/userController.js';
 
 const userRouter = express.Router(); // get express router
 
-
 userRouter.route('/signup')
 		.post(userController.signup);
 
@@ -17,6 +16,6 @@ userRouter.route('/all/:page?')
 		.get(userController.getAllUsers);
 
 userRouter.route('/:username/')
-		.get(userController.getPostById)
+		.get(userController.getUserByUserName)
 
-export default userController;
+export default userRouter;
