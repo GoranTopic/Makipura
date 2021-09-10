@@ -29,7 +29,7 @@ class postController {
 				let id = req.params.id;
 				let post;
 				try{  
-						post = await postModel.findById(id);
+						post = await postModel.findById(id).populate('userid');
 						if(post) res.json(post);
 						else res.status(404).json({ status: "post not found" });
 				}catch(e){ 
@@ -40,7 +40,7 @@ class postController {
 
 		static async createNewPost(req, res, next){
 				let result;
-				const new_post = { ...req.body, views: 0, engagement: 0 };
+				const new_post = { ...req.body, userid: req.user._id  };
 				try{
 						result = await postModel.create(new_post);
 						if(result) res.json({ status: "success" });

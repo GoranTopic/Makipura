@@ -20,8 +20,7 @@ const PostSchema = new Schema({ // create new Schma object
 				required: true,
 		},
 		userid: {
-				//type: mongoose.Schema.Types.ObjectId,
-				type: String,
+				type: mongoose.Schema.Types.ObjectId,
 				ref: 'User',
 				required: true,
 		},
@@ -31,9 +30,11 @@ const PostSchema = new Schema({ // create new Schma object
 		},
 		views: {
 				type: Number ,
+				default: 0,
 		},
 		engagement: {
 				type: Number ,
+				default: 0,
 		},
 		images: {
 				type: Array,

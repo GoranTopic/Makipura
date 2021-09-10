@@ -20,18 +20,24 @@ const UserSchema = new Schema({ // create new Schma object
 		password: {
 				type: String,
 				required: true,
+				select: false,
 		},
 		email:{
 				type: String,
 				required: true,
 				unique: true, 
+				select: false,
 		},
 		image: {
 				type: String,
 		},
+		admin:{
+				type: Boolean,
+				default: false,
+		}
 });
 
-// save hash the password before saving it 
+// Hash the password before saving it 
 UserSchema.pre('save', function(next){
 		const user = this;
 		bcrypt.hash(user.password, 10, (error, hash) => {  
