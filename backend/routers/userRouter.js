@@ -1,38 +1,50 @@
 import express from 'express' ;
-import userController from '../controllers/userController.js';
 import passport from "../config/passport.js";
 import { isAuth, isNotAuth, isUserOwner } from "../middlewares/authMiddleware.js";
-import { queryPostById, queryUserByUsername } from "../middlewares/queryMiddleware.js";
+import { queryPostById, queryUserByUsername, queryUserByCookie } from "../middlewares/queryMiddleware.js";
+import { sendUser, updateUser, deleteUser, signupUser, signinUser, signoutUser, sendAllUsers, searchUser  } from "../controllers/userControllers.js"
 
 const userRouter = express.Router(); // get express router
 
 userRouter.route('/signup')
 		.post(
-				userController.signup);
+				signupUser);
 
 userRouter.route('/signin')
 		.post( 
 				isNotAuth, // require user to log out before signing in
 				passport.authenticate('local'), 
-				userController.signedIn);
+				signinUser);
 
 userRouter.route('/signout')
 		.post(isAuth, // can't sign out if user is not signed in
-				userController.signout);
+				signoutUser);
 
 userRouter.route('/all/:page?')
-		.get(userController.getAllUsers);
+		.get(
+				sendAllUsers
+		);
 
 userRouter.route('/:username/')
-		.get(queryUserByUsername, 
-				userController.getUserByUsername)
-		.put(queryUserByUsername,
-				userController.updateUserByUsername)
-		.delete(queryUserByUsername,
-				userController.deleteUser)
+		.get(
+				queryUserByUsername, 
+				sendUser
+		)
+		.put(
+				queryUserByUsername,
+				updateUser
+		)
+		.delete(
+				queryUserByUsername,
+				deleteUser
+		);
 
 userRouter.route('/whoami')
-		.get(userController.whoAmI);
+		.get(
+				isAuth,
+				queryUserByCookie,
+				sendUser,
+		);
 
 
 

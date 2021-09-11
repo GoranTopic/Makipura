@@ -34,7 +34,7 @@ const queryUserByUsername = (req, res, next) => {
 				if(error) res.status(404).json(
 						{ status: "faliure", msg: "user not found" });
 				else{
-						//console.log(user);
+						console.log(user);
 						req.resource = user; // store model
 						next(); // pass it
 				}
@@ -43,4 +43,19 @@ const queryUserByUsername = (req, res, next) => {
 
 
 
-export { queryPostById, queryUserByUsername }
+const queryUserByCookie = (req, res, next)  =>{
+		/* from a given cookie it looks in the settion 
+		 * and return the user  */
+		console.log(req)
+		let { id } = req.user; // get user id from logged in user
+		userModel.findById(id, (err, post)=> {
+				if(error) res.status(404).json({ status: "post not found" });
+				else{
+						req.resource = post;
+						next();
+				}
+		});
+}
+
+
+export { queryPostById, queryUserByUsername, queryUserByCookie }

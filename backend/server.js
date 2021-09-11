@@ -14,7 +14,7 @@ import postRouter from "./routers/postRouter.js";
 import userRouter from "./routers/userRouter.js";
 
 // import custom middleware
-import { noCUDIfUnauthenticated } from "./middlewares/authMiddleware.js"
+//import { noCUDIfUnauthenticated } from "./middlewares/authMiddleware.js"
 
 async function main() {
 
@@ -70,7 +70,7 @@ async function main() {
 
 
 		// define routes to use here
-		server.use('/post/', noCUDIfUnauthenticated, postRouter);
+		server.use('/post/', postRouter);
 		// define routes for users,
 		server.use('/user/', userRouter);
 		// define routes for converstion 

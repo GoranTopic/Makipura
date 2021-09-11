@@ -16,7 +16,7 @@ const cookieValidator = (req, res, next) =>{
 
 }
 
-const isAuth = (req, res, next) => { 
+const isAuthenticated = (req, res, next) => { 
 		/* throws an error if it gets an reques from an  non-authenticated user */
 		if(!req.isAuthenticated())
 				// if there is a request and user is not authenticated, return error message
@@ -24,7 +24,7 @@ const isAuth = (req, res, next) => {
 		else next(); // let it pass
 }
 
-const isNotAuth = (req, res, next) => { 
+const isNotAuthenticated = (req, res, next) => { 
 		/* throws an error if it gets an reques from an authenticated user */
 		if(req.isAuthenticated())
 				// if there is a request and the user is authenticated, returns error message
@@ -32,7 +32,9 @@ const isNotAuth = (req, res, next) => {
 		else next(); // let it pass
 }
 
-const isPostOwner = (req, res, next) =>{
+
+
+const isAuthorized = (req, res, next) =>{
 		/* check is the logged in user is the owner of the post */
 		let post_id = req.params.id;
 		postModel.findById(post_id, (error, post ) =>{
