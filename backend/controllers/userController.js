@@ -33,76 +33,28 @@ const deleteUser = (req, res, next) => {
 }
 
 const updateUser = (req, res, next) => {
-		//implement find my id
-
-		let username = req.params.username;
-		let update = req.body;
-		let result; 
-		try{
-				result = await userModel.updateOne({ username }, update, (err, user) => {
-						console.log(err)
-
-				});
-				console.log(result);
-				if(result) res.json({ status: "success" });
-				else res.status(404).json({ status: `could not find user` });
-		}catch(e){ 
-				console.error(`could not ${e}`); 
-				res.status(500).json({ error: e  });
-		}
+		/* update the user in the bd */
+		let { id } = req.resource; // get id from queried resorce
+		let update = req.body; // get update
+		userModel.findByIdAndUpdate(id, update, (error, user) => {
+				if(error) res.status(500).json({ error}); // delete for production
+				else res.json({ status: "success" });
+		});
 }
 
 const signupUser = (req, res, next) => {
-		let result;
-		try{  
-				result = await userModel.create(req.body);
-				if(result){  
-						res.json({ status: "success" });
-				}
-				else res.status(404).json({ status: "could not create user" });
-		}catch(e){ 
-				console.error(`could not query home page posts ${e}`); 
-				res.status(500).json({ error: e  });
-		}
+		/* create user in the db */
+		let user = req.body;
+		userModel.create(user, (error, user) => {
+				if(error) res.status(500).json({ error}); // delete for production
+				else res.json({ status: "success" });
+		});
 }
 
 const signinUser = (req, res, next) => {
-		/* if th router got to here, 
-		 * it means it got passed the passport middleware auth */
-		// left authetification up to passport 
-		// get the username and password from the request
-		/* 
-				const { username, email, password } = req.body;
-				const filter = (username)?{ username: username }:{ email: email }
-				console.log("session :");
-				userModel.findOne( filter, (error, user) =>{
-						if(user){ // if the user if found in the db
-								bcrypt.compare(password, user.password, (error, same) =>{
-										if(same){
-												// password is the same, store user session
-												console.log(user.username + " has logged in");
-												req.session.userId = user._id;
-												req.session.isAuth = true;
-												res.status(200).json({ status: "success" });
-										} else { // if the password hashs to the same
-												console.log("passwords does not match");
-												console.log(error);
-												res.status(500).json({
-														error: "Incorrect username or password" 
-												});
-										}
-								});
-						}else{ // if the use was not found
-								console.log("no user: " + user + " found");
-								console.log(error);
-								res.status(500).json({ 
-										error: "Incorrect username or password" 
-								});
-						}
-				});
-				*/
-												res.status(200).json({ status: "success" });
-										}
+		/* left authetification up to passport */
+		res.status(200).json({ status: "success" });
+}
 
 const signoutUser = (req, res, next) => {
 		req.logout(); // call logout from passport
