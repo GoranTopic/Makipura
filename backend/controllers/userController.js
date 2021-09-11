@@ -20,13 +20,39 @@ class userController {
 				}
 		}
 
-		static async UpdateUserByUsername(req, res, next){
-				let id = req.user._id;
-				let result;
+
+		static async deleteUserByUsername(req, res, next){
+				//implement find my id
+				let username = req.params.username;
+				console.log(username);
+				let result; 
 				try{
-						result = await userModel.updateById(id);
-						if(result) res.json(result);
-						else res.status(404).json({ status: `could not find user: ${username}` });
+						result = await userModel.deleteOne({ username });
+						console.log("result: ");
+						console.log(result);
+						if(result.deletedCount) res.json({ status: "success" });
+						else res.status(404).json({ status: `could not find user` });
+				}catch(e){ 
+						console.error(`error: ${e}`); 
+						res.status(500).json({ error: e  });
+				}
+		}
+
+		static async updateUserByUsername(req, res, next){
+				//implement find my id
+				let username = req.params.username;
+				let update = req.body;
+				console.log(username);
+				console.log(update);
+				let result; 
+				try{
+						result = await userModel.updateOne({ username }, update, (err, user) => {
+								console.log(err)
+
+						});
+						console.log(result);
+						if(result) res.json({ status: "success" });
+						else res.status(404).json({ status: `could not find user` });
 				}catch(e){ 
 						console.error(`could not ${e}`); 
 						res.status(500).json({ error: e  });
@@ -38,7 +64,6 @@ class userController {
 				try{  
 						result = await userModel.create(req.body);
 						if(result){  
-								console.log(res.session);
 								res.json({ status: "success" });
 						}
 						else res.status(404).json({ status: "could not create user" });
@@ -51,6 +76,7 @@ class userController {
 		static async signedIn(req, res, next){
 				/* if th router got to here, 
 				 * it means it got passed the passport middleware auth */
+				// left authetification up to passport 
 				// get the username and password from the request
 				/* 
 				const { username, email, password } = req.body;

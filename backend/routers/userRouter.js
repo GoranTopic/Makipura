@@ -24,8 +24,8 @@ userRouter.route('/all/:page?')
 
 userRouter.route('/:username/')
 		.get(userController.getUserByUsername)
-		.put(userController.UpdateUserByUsername)
-		.delete(userController.getUserByUsername)
+		.put(userController.updateUserByUsername)
+		.delete(userController.deleteUserByUsername)
 
 userRouter.route('/whoami')
 		.get(userController.whoAmI);
