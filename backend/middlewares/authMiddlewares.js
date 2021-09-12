@@ -4,27 +4,22 @@ const authorization_rules = [
 		{ 
 				type: 'post',
 				description: "if user is owner",
-				authorizer: (user, resource) => resource.userid.equals(user._id),
+				passes: (user, resource) => resource.userid.equals(user._id),
 		},{
 				type: 'post',
 				description: "if user is admin",
-				authorizer: (user, resource) => user.admin,
+				passes: (user, resource) => user.admin,
 		},{
 				type: 'user',
 				description: "if user is chagning it own profile",
-				authorizer: (user, resource) => resource._id.equals(user._id),
+				passes: (user, resource) => resource._id.equals(user._id),
 		},{
 				type: 'user',
 				description: "if user is admin",
-				authorizer: (user, resource) => user.admin,
+				passes: (user, resource) => user.admin,
 		}
 ]
 
-
-const cookieValidator = (req, res, next) =>{
-		/*  */
-
-}
 
 const isAuthenticated = (req, res, next) => { 
 		/* throws an error if it gets an reques from an  non-authenticated user */
@@ -46,127 +41,19 @@ const isAuthorized = (req, res, next) =>{
 		/* check is the logged in user is the owner of the post */
 		let inquirer = req.user; // get logged in user
 		let resource  = req.resource; // get the resource wanting to access
-		// if the user is admin let it pass
-		if(inquirer.admin) next();
+		let resourceType = req.resourceType;
 		// check if we got inquirer
-		if(!inquirer){ 
-				console.log("could not get logged in user"); 
-				res.status(500).json({ 
-						status: 'faliure', 
-						msg: 'could not get logged in user in isAuthorized' });
-		}
-		// check if we got resource
-		if(!resource){   
-				console.error("could not get resorce"); 
-				res.status(500).json({ 
-						status: 'faliure', 
-						msg: 'could not get resorce in isAuthorized' });
-		}
-		// check what kind of obj we are dealing with 
-		if(req.resourceType === 'post'){ 
-				// we are dealing with a post obj
-				// to authorize this post, userid on post most 
-				// be the same as inquirer's id 
-				console.log(req.baseUrl);
-				console.log('inquirer:');
-				console.log(inquirer);
-				console.log('resource:');
-				console.log(resource);
-				console.log(typeof resource)
-				if(inquirer._id.equals(resource.userid)){
-						next(); // move along
-				}else{ // you shall not pass
-						res.status(500).json({ 
-								status: 'faliure', 
-								msg: 'unauthorized' });
-				}
-		}else if(req.baseUrl === '/user'){ 
-				// we are dealing with a user obj
-				// to authorize this post, userid on post most 
-				// be the same as inquirer's id 
-				console.log(req.baseUrl);
-				console.log('inquirer:');
-				console.log(inquirer);
-				console.log('resource:');
-				console.log(resource);
-				console.log(typeof resource)
-				if(inquirer._id.equals(resource._id)){
-						next(); // move along
-				}else{ // you shall not pass
-						res.status(500).json({ 
-								status: 'faliure', 
-								msg: 'unauthorized' });
-				}		}else{
-				console.log("could not get baseUrl"); 
-				res.status(500).json({ 
-						status: 'faliure', 
-						msg: 'could not get logged in user in isAuthorized' });
-		}
+		if(!inquirer || !resource) res.status(500).json({ status: 'faliure' });
+		// get all the rules for a given type
+		let rules = authorization_rules.filter((rule) => resourceType === rule.type);
+		// if the user meets any of the authorization rules, let them pass
+		let failedAll = rules.every( rule => !rule.passes(inquirer, resource) );
+		// if they didn't pass any rule, block them
+		if(failedAll) res.status(403).json({status: 'faliure', msg: 'Unauthorized'})
+		// else they passed one rule, le them pass 
+		else next();
 }
 
-
-
-const isAuthorizedOld = (req, res, next) =>{
-		/* check is the logged in user is the owner of the post */
-		let inquirer = req.user; // get logged in user
-		let resource  = req.resource; // get the resource wanting to access
-		// if the user is admin let it pass
-		if(inquirer.admin) next();
-		// check if we got inquirer
-		if(!inquirer){ 
-				console.log("could not get logged in user"); 
-				res.status(500).json({ 
-						status: 'faliure', 
-						msg: 'could not get logged in user in isAuthorized' });
-		}
-		// check if we got resource
-		if(!resource){   
-				console.error("could not get resorce"); 
-				res.status(500).json({ 
-						status: 'faliure', 
-						msg: 'could not get resorce in isAuthorized' });
-		}
-		// check what kind of obj we are dealing with 
-		if(req.resourceType === 'post'){ 
-				// we are dealing with a post obj
-				// to authorize this post, userid on post most 
-				// be the same as inquirer's id 
-				console.log(req.baseUrl);
-				console.log('inquirer:');
-				console.log(inquirer);
-				console.log('resource:');
-				console.log(resource);
-				console.log(typeof resource)
-				if(inquirer._id.equals(resource.userid)){
-						next(); // move along
-				}else{ // you shall not pass
-						res.status(500).json({ 
-								status: 'faliure', 
-								msg: 'unauthorized' });
-				}
-		}else if(req.baseUrl === '/user'){ 
-				// we are dealing with a user obj
-				// to authorize this post, userid on post most 
-				// be the same as inquirer's id 
-				console.log(req.baseUrl);
-				console.log('inquirer:');
-				console.log(inquirer);
-				console.log('resource:');
-				console.log(resource);
-				console.log(typeof resource)
-				if(inquirer._id.equals(resource._id)){
-						next(); // move along
-				}else{ // you shall not pass
-						res.status(500).json({ 
-								status: 'faliure', 
-								msg: 'unauthorized' });
-				}		}else{
-				console.log("could not get baseUrl"); 
-				res.status(500).json({ 
-						status: 'faliure', 
-						msg: 'could not get logged in user in isAuthorized' });
-		}
-}
 
 
 

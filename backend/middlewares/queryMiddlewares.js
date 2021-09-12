@@ -37,7 +37,6 @@ const queryUserByUsername = (req, res, next) => {
 		});
 }
 
-
 const queryUserByCookie = (req, res, next)  =>{
 		/* from a given cookie it looks in the settion 
 		 * and return the user  */
