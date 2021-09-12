@@ -1,14 +1,24 @@
 import postModel from "../models/postModel.js";
 
-
-const noCUDIfUnauthenticated = (req, res, next) => { 
-		/* throws an error when there are POST PUT DELETE request from non-authenticated user */
-		if( req.method !== 'GET' && !req.isAuthenticated() ) // might be post or put of delete
-				// if there is a CUD request and user is not authenticated, return error message
-				res.status(401).json({ status: 'faliure', msg: "user is not logged in"});
-		else // the reques is a GET
-				next(); // let it pass
-}
+const authorization_rules = [  
+		{ 
+				type: 'post',
+				description: "if user is owner",
+				authorizer: (user, resource) => resource.userid.equals(user._id),
+		},{
+				type: 'post',
+				description: "if user is admin",
+				authorizer: (user, resource) => user.admin,
+		},{
+				type: 'user',
+				description: "if user is chagning it own profile",
+				authorizer: (user, resource) => resource._id.equals(user._id),
+		},{
+				type: 'user',
+				description: "if user is admin",
+				authorizer: (user, resource) => user.admin,
+		}
+]
 
 
 const cookieValidator = (req, res, next) =>{
@@ -32,15 +42,6 @@ const isNotAuthenticated = (req, res, next) => {
 		else next(); // let it pass
 }
 
-const isAuthorizedForPost = (req, res, next) =>{
-		/* check is the logged in user is the owner of the post */
-		let inquirer = req.user; // get logged in user
-		let resource  = req.resource; // get the resource wanting to access
-		// if the user is admin let it pass
-		//if(inquirer.admin) next();
-		
-}
-
 const isAuthorized = (req, res, next) =>{
 		/* check is the logged in user is the owner of the post */
 		let inquirer = req.user; // get logged in user
@@ -62,7 +63,71 @@ const isAuthorized = (req, res, next) =>{
 						msg: 'could not get resorce in isAuthorized' });
 		}
 		// check what kind of obj we are dealing with 
-		if(req.baseUrl === '/post'){ 
+		if(req.resourceType === 'post'){ 
+				// we are dealing with a post obj
+				// to authorize this post, userid on post most 
+				// be the same as inquirer's id 
+				console.log(req.baseUrl);
+				console.log('inquirer:');
+				console.log(inquirer);
+				console.log('resource:');
+				console.log(resource);
+				console.log(typeof resource)
+				if(inquirer._id.equals(resource.userid)){
+						next(); // move along
+				}else{ // you shall not pass
+						res.status(500).json({ 
+								status: 'faliure', 
+								msg: 'unauthorized' });
+				}
+		}else if(req.baseUrl === '/user'){ 
+				// we are dealing with a user obj
+				// to authorize this post, userid on post most 
+				// be the same as inquirer's id 
+				console.log(req.baseUrl);
+				console.log('inquirer:');
+				console.log(inquirer);
+				console.log('resource:');
+				console.log(resource);
+				console.log(typeof resource)
+				if(inquirer._id.equals(resource._id)){
+						next(); // move along
+				}else{ // you shall not pass
+						res.status(500).json({ 
+								status: 'faliure', 
+								msg: 'unauthorized' });
+				}		}else{
+				console.log("could not get baseUrl"); 
+				res.status(500).json({ 
+						status: 'faliure', 
+						msg: 'could not get logged in user in isAuthorized' });
+		}
+}
+
+
+
+const isAuthorizedOld = (req, res, next) =>{
+		/* check is the logged in user is the owner of the post */
+		let inquirer = req.user; // get logged in user
+		let resource  = req.resource; // get the resource wanting to access
+		// if the user is admin let it pass
+		if(inquirer.admin) next();
+		// check if we got inquirer
+		if(!inquirer){ 
+				console.log("could not get logged in user"); 
+				res.status(500).json({ 
+						status: 'faliure', 
+						msg: 'could not get logged in user in isAuthorized' });
+		}
+		// check if we got resource
+		if(!resource){   
+				console.error("could not get resorce"); 
+				res.status(500).json({ 
+						status: 'faliure', 
+						msg: 'could not get resorce in isAuthorized' });
+		}
+		// check what kind of obj we are dealing with 
+		if(req.resourceType === 'post'){ 
 				// we are dealing with a post obj
 				// to authorize this post, userid on post most 
 				// be the same as inquirer's id 
@@ -126,4 +191,4 @@ const isUserOwner = (req, res, next) =>{
 
 
 
-export { noCUDIfUnauthenticated, cookieValidator, isAuthenticated, isNotAuthenticated, isAuthorized } 
+export {  isAuthenticated, isNotAuthenticated, isAuthorized } 
