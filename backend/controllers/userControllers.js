@@ -9,9 +9,13 @@ const pick = (obj, arr) =>
 // user selected field to send back
 const selectFields = ['username', 'firstname', 'lastname', 'image'];
 
+// check resource is passedin req
+const checkResource = (resource) => resource || res.status(500).json({ status: 'faliure', msg: 'resource not queried' })
+
 const sendUser = (req, res, next) => {
 		/* from a given user stored in req.resource, remove unwanted fields
 		 * and return to client */
+		checkResource(req.resource);
 		let user =  pick(req.resource, selectFields)  ; // get user from query
 		if(user) res.json(user);
 		else res.status(500).json({ status: `faliure` });
@@ -20,6 +24,7 @@ const sendUser = (req, res, next) => {
 
 const deleteUser = (req, res, next) => {
 		//implement find my id
+		checkResource(req.resource);
 		let { id } = req.resource; // extract user
 		userModel.findByIdAndDelete(id, (error, user) => {
 				if(error) res.status(500).json({ error}); // delete for production
@@ -29,6 +34,7 @@ const deleteUser = (req, res, next) => {
 
 const updateUser = (req, res, next) => {
 		/* update the user in the bd */
+		checkResource(req.resource);
 		let { id } = req.resource; // get id from queried resorce
 		let update = req.body; // get update
 		userModel.findByIdAndUpdate(id, update, (error, user) => {
@@ -75,7 +81,6 @@ const sendAllUsers =  async (req, res, next) => {
 		}
 }
 
-
 const searchUser = async (req, res, next) => {
 		/* todo */
 		let filter = {}; 
@@ -94,7 +99,6 @@ const searchUser = async (req, res, next) => {
 		}
 
 }
-
 
 export  { sendUser, updateUser, deleteUser, signupUser, signinUser, signoutUser, sendAllUsers, searchUser  };
 

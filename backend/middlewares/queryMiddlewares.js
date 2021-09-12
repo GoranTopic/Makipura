@@ -11,9 +11,11 @@ const queryPostById = (req, res, next)  =>{
 		/* given an id, takeit from the db
 		 * and store it in resorse */
 		let id = req.params.id;
-		postModel.findById(id, (err, post)=> {
-				if(error) res.status(404).json({ status: "post not found" });
+		postModel.findById(id, (error, post)=> {
+				if(error) res.status(500);
+				if(!post)  res.status(404).json( { status: "faliure", msg: "post not found" });
 				else{
+						req.resourceType = "post"; 
 						req.resource = post;
 						next();
 				}
@@ -23,18 +25,12 @@ const queryPostById = (req, res, next)  =>{
 const queryUserByUsername = (req, res, next) => {
 		/* given an username, take it from the db
 		 * and store it in resources */
-		
 		let username = req.params.username;
-		//console.log("username")	
-		//console.log(username)	
-		userModel.findOne({ username  }, (error, user)=> {
-				//console.log("user")	
-				//console.log(user)	
-				//console.log(error);
-				if(error) res.status(404).json(
-						{ status: "faliure", msg: "user not found" });
+		userModel.findOne({ username }, (error, user)=> {
+				if(error) res.status(500);
+				if(!user) res.status(404).json( { status: "faliure", msg: "user not found" });
 				else{
-						console.log(user);
+						req.resourceType = "user"; 
 						req.resource = user; // store model
 						next(); // pass it
 				}
@@ -42,18 +38,18 @@ const queryUserByUsername = (req, res, next) => {
 }
 
 
-
 const queryUserByCookie = (req, res, next)  =>{
 		/* from a given cookie it looks in the settion 
 		 * and return the user  */
-		console.log(req)
 		let { id } = req.user; // get user id from logged in user
-		userModel.findById(id, (err, post)=> {
-				if(error) res.status(404).json({ status: "post not found" });
+		userModel.findById(id, (error, user)=> {
+				if(error) res.status(500);
+				if(!user) res.status(404).json( { status: "faliure", msg: "user not found" });
 				else{
-						req.resource = post;
+						req.resourceType = "post"; 
+						req.resource = user;
 						next();
-				}
+				} 
 		});
 }
 
