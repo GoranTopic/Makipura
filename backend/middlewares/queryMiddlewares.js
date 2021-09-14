@@ -11,15 +11,32 @@ const queryPostById = (req, res, next)  =>{
 		/* given an id, takeit from the db
 		 * and store it in resorse */
 		let id = req.params.id;
-		postModel.findById(id, (error, post)=> {
-				if(error) res.status(500);
-				if(!post)  res.status(404).json( { status: "faliure", msg: "post not found" });
-				else{
-						req.resourceType = "post"; 
-						req.resource = post;
-						next();
-				}
-		});
+		postModel.findById(id)
+				.populate('userid', '-admin -__v', )
+				.exec((error, post) => {
+						if(error) res.status(500);
+						if(!post)  res.status(404).json( { status: "faliure", msg: "post not found" });
+						else{
+								req.resourceType = "post"; 
+								req.resource = post;
+								next();
+						}
+				});
+}
+
+const queryAllPost = (req, res, next)  =>{
+		/* query all the post from db, in production,
+		 * delete this and only use pagination */
+		postModel.find({})
+				.populate('userid')
+				.exec((error, posts) => {
+						if(error) res.status(500);
+						else{
+								req.resourceType = "posts"; 
+								req.resource = posts;
+								next();
+						}
+				});
 }
 
 const queryUserByUsername = (req, res, next) => {
@@ -53,4 +70,4 @@ const queryUserByCookie = (req, res, next)  =>{
 }
 
 
-export { queryPostById, queryUserByUsername, queryUserByCookie }
+export { queryPostById, queryAllPost, queryUserByUsername, queryUserByCookie }

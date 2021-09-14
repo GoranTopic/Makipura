@@ -1,32 +1,52 @@
 import express from 'express' ;
-import postController from '../controllers/postControllers.js';
 import { isAuthenticated , isAuthorized } from '../middlewares/authMiddlewares.js';
-import { queryPostById } from '../middlewares/queryMiddlewares.js';
+import { queryPostById, queryAllPost } from '../middlewares/queryMiddlewares.js';
+import { postValidate  } from '../middlewares/validationMiddlewares.js';
+import { sendHomePagePosts, 
+		sendPosts, 
+		sendPost, 
+		createNewPost, 
+		updatePost, 
+		deletePost }from  '../controllers/postControllers.js';
+import { postValidationSchema, validate } from '../middlewares/validationMiddlewares.js';
+import { checkSchema } from 'express-validator';
 
 const postRouter = express.Router(); // get express router
 
 postRouter.route('/')
-		.get(postController.getHomePagePosts)
-		.post(
-				isAuthenticated,
-				postController.createNewPost
+		.get(
+				sendHomePagePosts
 		)
+		.post( // make a post 
+				isAuthenticated,
+				checkSchema(postValidationSchema),
+				validate, //
+				createNewPost
+		);
 
 postRouter.route('/all/:page?')
-		.get(postController.getAllPost)
+		.get(
+				queryAllPost,
+				sendPosts
+		);
 
 postRouter.route('/id/:id/')
-		.get(postController.getPostById)
+		.get(
+				queryPostById,
+				sendPost,
+		)
 		.put(
+				postValidate(),
 				isAuthenticated,
 				queryPostById,
 				isAuthorized,
-				postController.updatePostById
+				updatePost
 		)
 		.delete(
-				isAuthenticated, 
-				isAuthorized, 
-				postController.deletePostById
+				isAuthenticated, // check if user is logged in
+				queryPostById, // check post queried
+				isAuthorized, // is authorized to delete post ? 
+				deletePost, // do the deleting
 		);
 
 export default postRouter;
