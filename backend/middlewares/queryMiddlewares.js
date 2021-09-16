@@ -45,7 +45,7 @@ const queryUserByUsername = (req, res, next) => {
 		let username = req.params.username;
 		userModel.findOne({ username }, (error, user)=> {
 				if(error) res.status(500);
-				if(!user) res.status(404).json( { status: "faliure", msg: "user not found" });
+				else if(!user) res.status(404).json( { status: "faliure", msg: "user not found" });
 				else{
 						req.resourceType = "user"; 
 						req.resource = user; // store model

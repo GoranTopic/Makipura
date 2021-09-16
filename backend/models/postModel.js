@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'; // import mongoose 
+import { currenciesList, conditionsList } from '../config/emunsAndLists.js';
+
 const { Schema } = mongoose; // get the Schema obj from mongoose
+
 
 const PostSchema = new Schema({ // create new Schma object
 		title:{
@@ -10,13 +13,18 @@ const PostSchema = new Schema({ // create new Schma object
 				type: String,
 				required: true,
 		},
+		currency:{
+				type: String,
+				enum: currenciesList,
+				required: true,
+		},
 		price:{
 				type: Number,
 				required: true,
 		},
 		condition:{ 
 				type: String,
-				enum: [ "brand new", "new", "slightly used", "used", "worn", "damaged" ],
+				enum: conditionsList,
 				required: true,
 		},
 		userid: {

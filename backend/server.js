@@ -29,7 +29,7 @@ async function main() {
 		// define middle ware to use in server
 		const server = express(); //make instance of express server
 		server.use(cors()); // use the middleware cors
-		server.use(express.json()); // use json middleware 
+		server.use(express.json({limit:'10kb'})); // use json middleware 
 
 		// connect the mongo connect with our session
 		const mongoSession = MongoDBSession(session); 
@@ -65,8 +65,6 @@ async function main() {
 
 		server.use(passport.initialize());
 		server.use(passport.session());
-
-
 
 
 		// define routes to use here

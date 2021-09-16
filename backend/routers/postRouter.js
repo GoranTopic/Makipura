@@ -1,7 +1,6 @@
 import express from 'express' ;
 import { isAuthenticated , isAuthorized } from '../middlewares/authMiddlewares.js';
 import { queryPostById, queryAllPost } from '../middlewares/queryMiddlewares.js';
-import { postValidate  } from '../middlewares/validationMiddlewares.js';
 import { sendHomePagePosts, 
 		sendPosts, 
 		sendPost, 
@@ -9,6 +8,7 @@ import { sendHomePagePosts,
 		updatePost, 
 		deletePost }from  '../controllers/postControllers.js';
 import { postValidationSchema, validate } from '../middlewares/validationMiddlewares.js';
+import { cleanProperties  } from '../middlewares/utilsMiddlewares.js';
 import { checkSchema } from 'express-validator';
 
 const postRouter = express.Router(); // get express router
@@ -18,6 +18,7 @@ postRouter.route('/')
 				sendHomePagePosts
 		)
 		.post( // make a post 
+				cleanProperties,
 				isAuthenticated,
 				checkSchema(postValidationSchema),
 				validate, //
@@ -36,7 +37,7 @@ postRouter.route('/id/:id/')
 				sendPost,
 		)
 		.put(
-				postValidate(),
+				cleanProperties,
 				isAuthenticated,
 				queryPostById,
 				isAuthorized,

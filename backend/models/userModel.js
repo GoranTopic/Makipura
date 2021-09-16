@@ -28,6 +28,12 @@ const UserSchema = new Schema({ // create new Schma object
 				unique: true, 
 				select: false,
 		},
+		mobileNumber:{
+				type: String,
+				required: true,
+				unique: true, 
+				select: false,
+		},
 		image: {
 				type: String,
 		},
