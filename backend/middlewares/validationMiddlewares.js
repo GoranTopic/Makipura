@@ -133,17 +133,40 @@ const postValidationSchema = {
 		},
 }
 
-const usernameValidation = () => {
-		let matchesOptions ={
-				options: [/^[a-zA-Z0-9_\-áéíóúüñ]*$/],
-				errorMessage: 'username can contain only letters and numbers or underscore',
-		}
-		let trimOptions = { options: [' ',] }
-		return body('username')
-				.isLength({ min: 3, max: 50, }).withMessage("username must be between 3 to 50")
-				.matches([/^[a-zA-Z0-9_\-áéíóúüñ]*$/]).withMessage("invalid characters")
-				//.trim([' '])
+const checkBlockedUsernames = (username, params) =>{
+
 }
+
+
+const checkUniqueness =  (username, params) => {
+		let resource = params.req.resource;
+		/* if resource is defined, it means this is an update, 
+		 * in which case we must not check for duplictes of unique properties 
+		 * only if the given username and the one in the db they are the same. */
+		if(resource) if(resource.username === username ) return true;
+		// continue checking if it is one of the blocked usernames 
+		let isNotBlocked = blockedUsernames.every( 
+				// check is the given user name is equal to 
+				blocked => blocked.normalize() !== username.normalize());
+		if(isNotBlocked){ // if username was not blocked, check is it duplicate
+				return userModel.find({ username })
+						.then( username => { 
+								if (username.length > 0) 
+										return Promise.reject('Username already in use');
+						});
+		}else return Promise.reject('That Username cannot be used');
+}
+
+
+const usernameValidation = () => 
+		body('username')
+				.isLength({ min: 3, max: 50, })
+				.withMessage("username must be between 3 to 50")
+				.matches(/^[a-zA-Z0-9_\-áéíóúüñ]*$/).withMessage("invalid characters")
+				.cutom( 
+
+				)
+				.trim(' ')
 
  
 const userValidators = [
