@@ -3,7 +3,7 @@ import passport from "../config/passport.js";
 import { isAuthenticated, isNotAuthenticated, isAuthorized } from "../middlewares/authMiddlewares.js";
 import { queryPostById, queryUserByUsername, queryUserByCookie } from "../middlewares/queryMiddlewares.js";
 import { sendUser, updateUser, deleteUser, signupUser, signinUser, signoutUser, sendAllUsers, searchUser  } from "../controllers/userControllers.js"
-import { userValidationSchema, userValidators, validate, validateSchema } from '../middlewares/validationMiddlewares.js';
+import { userValidationSchema, userValidators, postValidators, validate, validateSchema } from '../middlewares/validationMiddlewares.js';
 import { checkSchema } from 'express-validator';
 import { cleanProperties  } from '../middlewares/utilsMiddlewares.js';
 
@@ -13,9 +13,7 @@ userRouter.route('/signup')
 		.post(
 				cleanProperties,
 				isNotAuthenticated, // if it is not logged it turn away
-				validate( userValidators ), // run vlidators
-				//checkSchema(userValidationSchema),
-				//validateSchema,
+				validate( userValidators ), // run validators
 				signupUser
 		);
 
