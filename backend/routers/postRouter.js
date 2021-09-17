@@ -7,7 +7,7 @@ import { sendHomePagePosts,
 		createNewPost, 
 		updatePost, 
 		deletePost }from  '../controllers/postControllers.js';
-import { postValidationSchema, validate } from '../middlewares/validationMiddlewares.js';
+import { postValidators, validate } from '../middlewares/validationMiddlewares.js';
 import { cleanProperties  } from '../middlewares/utilsMiddlewares.js';
 import { checkSchema } from 'express-validator';
 
@@ -20,8 +20,7 @@ postRouter.route('/')
 		.post( // make a post 
 				cleanProperties,
 				isAuthenticated,
-				checkSchema(postValidationSchema),
-				validate, //
+				validate(postValidators), // run validators 
 				createNewPost
 		);
 
