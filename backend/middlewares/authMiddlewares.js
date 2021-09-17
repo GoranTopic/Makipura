@@ -64,8 +64,6 @@ const isUserOwner = (req, res, next) =>{
 				if(error){ // if could not find user 
 						res.status(404).json({ status: "faliure", msg: "user not found" });
 				}else{ // user found
-						console.log(req.user._id) // reuqest user id
-						console.log(user._id) // databse user id
 						if(req.user._id.equals(user._id)){ // user is the owner
 								next();  // you shall pass
 						}else{
