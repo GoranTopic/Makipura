@@ -3,7 +3,7 @@ import passport from "../config/passport.js";
 import { isAuthenticated, isNotAuthenticated, isAuthorized } from "../middlewares/authMiddlewares.js";
 import { queryPostById, queryUserByUsername, queryUserByCookie } from "../middlewares/queryMiddlewares.js";
 import { sendUser, updateUser, deleteUser, signupUser, signinUser, signoutUser, sendAllUsers, searchUser  } from "../controllers/userControllers.js"
-import { userValidators, validate } from '../middlewares/validationMiddlewares.js';
+import { userValidators, updateUserValidators, validate } from '../middlewares/validationMiddlewares.js';
 import { cleanProperties  } from '../middlewares/utilsMiddlewares.js';
 
 const userRouter = express.Router(); // get express router
@@ -56,7 +56,7 @@ userRouter.route('/:username/')
 		.put(
 				isAuthenticated, // user must be logged in
 				queryUserByUsername, // check user request
-				//validate(  userValidators ), // run vlidators
+				validate( updateUserValidators ), // run vlidators
 				isAuthorized, // check is user is authorized
 				updateUser // update databse
 		)
