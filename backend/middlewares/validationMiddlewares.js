@@ -133,44 +133,121 @@ const postValidationSchema = {
 		},
 }
 
-const checkBlockedUsernames = (username, params) =>{
-
+const checkBlockedUsernames = (blockedUsernames) =>  (username, params) => {
+		// continue checking if it is one of the blocked usernames 
+		let isNotBlocked = blockedUsernames.every( // check is the given user name is equal to 
+				blocked => blocked.normalize() !== username.normalize()); 
+		// if username was not blocked, 
+		if(isNotBlocked) return true;
+		else return  Promise.reject('That username cannot be used'); 
 }
 
 
-const checkUniqueness =  (username, params) => {
-		let resource = params.req.resource;
-		/* if resource is defined, it means this is an update, 
-		 * in which case we must not check for duplictes of unique properties 
-		 * only if the given username and the one in the db they are the same. */
-		if(resource) if(resource.username === username ) return true;
-		// continue checking if it is one of the blocked usernames 
-		let isNotBlocked = blockedUsernames.every( 
-				// check is the given user name is equal to 
-				blocked => blocked.normalize() !== username.normalize());
-		if(isNotBlocked){ // if username was not blocked, check is it duplicate
-				return userModel.find({ username })
-						.then( username => { 
-								if (username.length > 0) 
-										return Promise.reject('Username already in use');
-						});
-		}else return Promise.reject('That Username cannot be used');
+const checkUniqueness = (fieldName) => (fieldValue, params) => {
+		/* this function can be user to check the uniqueness  of aa field,
+		 * it checks for the field in the db base which should return 0 number elements
+		 * however if the same value as the previous value is passed. it checks for
+		 * a already queried resource */
+		let filter = {} 
+		let resource = params.req.resource; // must be single obj
+		if(resource) if(resource[fieldName]  ===  fieldValue) return true;
+		// check if it is already in databse
+		filter[fieldName] = fieldValue // add field to filter
+		return userModel.find(filter).then( results => { 
+				if (results.length > 0) return Promise.reject( fieldName + ' already in use');
+				else return true
+		});
 }
 
 
 const usernameValidation = () => 
 		body('username')
-				.isLength({ min: 3, max: 50, })
-				.withMessage("username must be between 3 to 50")
+				.isLength({ min: 3, max: 50, }).withMessage("must be between 3 to 50") 
 				.matches(/^[a-zA-Z0-9_\-áéíóúüñ]*$/).withMessage("invalid characters")
-				.cutom( 
-
-				)
+				.custom(checkBlockedUsernames(blockedUsernames)) 
+				.custom(checkUniqueness('username'))
 				.trim(' ')
 
+const firstnameValidation = () => 
+		body('firstname')
+				.isLength({ min: 3, max: 50, }).withMessage("must be between 3 to 50") 
+				.matches(/^[a-zA-Z0-9_\-áéíóúüñ ]*$/).withMessage("invalid characters")
+				.trim(' ')
  
+const lastnameValidation = () => 
+		body('lastname')
+				.optional()
+				.isLength({ min: 3, max: 50, }).withMessage("must be between 3 to 50") 
+				.matches(/^[a-zA-Z0-9_\-áéíóúüñ ]*$/).withMessage("invalid characters")
+				.trim(' ')
+
+let isEmailOptions = {  
+		allow_display_name: false,
+		require_display_name: false,
+		allow_utf8_local_part: true,
+		require_tld: true,
+		allow_ip_domain: false,
+		domain_specific_validation: false,
+		ignore_max_length: true,
+		blacklisted_chars: ' ',
+}
+
+let normalizeEmailOptions = {
+		all_lowercase: true,
+		gmail_lowercase: true,
+		gmail_remove_dots: false,
+		gmail_remove_subaddress: true,
+		gmail_convert_googlemaildotcom: true,
+		outlookdotcom_lowercase: true,
+		yahoo_lowercase: true,
+		yahoo_remove_subaddress: true,
+		icloud_lowercase: true,
+		icloud_remove_subaddress: true,
+}
+
+const emailValidation = () => 
+		body('email')
+				.isLength({ max: 50, }).withMessage("can't be longer than 50") 
+				.matches(/^[a-zA-Z0-9_\-\@\.áéíóúüñ ]*$/).withMessage("invalid characters")
+				.isEmail(isEmailOptions).withMessage("invalid characters")
+				.normalizeEmail(normalizeEmailOptions)
+				.custom(checkUniqueness('email'))
+				.trim(' ')
+
+const  mobileNumberValidatior = () => 
+		body('mobileNumber')
+				.isMobilePhone(phoneNumbersLocales)
+				.custom(checkUniqueness('mobileNumber'))
+
+let isStrongPasswordOptions = {
+		minLength: 8, 
+		minLowercase: 1, 
+		minUppercase: 1, 
+		minNumbers: 1, 
+		minSymbols: 0,
+		returnScore: false, 
+		pointsPerUnique: 1, 
+		pointsPerRepeat: 0.5, 
+		pointsForContainingLower: 10, 
+		pointsForContainingUpper: 10, 
+		pointsForContainingNumber: 10, 
+		pointsForContainingSymbol: 10,
+}
+
+
+const passwordValidation = () => 
+		body('password')
+				.isStrongPassword(isStrongPasswordOptions)
+				.withMessage("Password must be greater than 8 and contain at least one uppercase letter, one lowercase letter, and one number")
+
+
 const userValidators = [
 		usernameValidation(),
+		firstnameValidation(),
+		lastnameValidation(),
+		emailValidation(),
+		mobileNumberValidatior(),
+		passwordValidation(),
 ]
 
 
