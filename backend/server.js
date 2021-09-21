@@ -13,9 +13,6 @@ import passport from "./config/passport.js";
 import postRouter from "./routers/postRouter.js";
 import userRouter from "./routers/userRouter.js";
 
-// import custom middleware
-//import { noCUDIfUnauthenticated } from "./middlewares/authMiddleware.js"
-
 async function main() {
 
 		dotenv.config(); // run dot env to get enviroment variables
@@ -29,7 +26,10 @@ async function main() {
 		// define middle ware to use in server
 		const server = express(); //make instance of express server
 		server.use(cors()); // use the middleware cors
+		// server static file in the public directory
+		server.use(express.static('public'));
 		server.use(express.json({limit:'10kb'})); // use json middleware 
+		server.use(express.urlencoded());
 
 		// connect the mongo connect with our session
 		const mongoSession = MongoDBSession(session); 

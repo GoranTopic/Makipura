@@ -12,13 +12,13 @@ let checkBlockedUsernames = blockedUsernames => username => {
 		else return  Promise.reject('That username cannot be used'); 
 }
 
-let checkUniqueness = fieldName => fieldValue  => {
+let checkUniqueness = fieldName => (fieldValue, req)  => {
 		/* this function can be user to check the uniqueness  of aa field,
 		 * it checks for the field in the db base which should return 0 number elements
 		 * however if the same value as the previous value is passed. it checks for
 		 * a already queried resource */
 		let filter = {} 
-		let resource = params.req.resource; // must be single obj
+		let resource = req.resource
 		if(resource) if(resource[fieldName]  ===  fieldValue) return true;
 		// check if it is already in databse
 		filter[fieldName] = fieldValue // add field to filter

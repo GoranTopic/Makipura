@@ -5,14 +5,17 @@ import { queryPostById, queryUserByUsername, queryUserByCookie } from "../middle
 import { sendUser, updateUser, deleteUser, signupUser, signinUser, signoutUser, sendAllUsers, searchUser  } from "../controllers/userControllers.js"
 import { userValidators, updateUserValidators, validate } from '../middlewares/validationMiddlewares.js';
 import { cleanProperties  } from '../middlewares/utilsMiddlewares.js';
+import multer from 'multer'; // multer
 
 const userRouter = express.Router(); // get express router
+const upload = multer({ dest: 'uploads/' }) 
 
 userRouter.route('/signup')
 		.post(
-				cleanProperties,
 				isNotAuthenticated, // if it is not logged it turn away
+				cleanProperties,
 				validate( userValidators ), // run validators
+				upload.single('image'),
 				signupUser
 		);
 
