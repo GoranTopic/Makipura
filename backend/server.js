@@ -28,7 +28,7 @@ async function main() {
 		server.use(cors()); // use the middleware cors
 		// server static file in the public directory
 		server.use(express.static('public'));
-		server.use(express.json({limit:'10kb'})); // use json middleware 
+		server.use(express.json({ limit:'10kb' })); // use json middleware 
 		server.use(express.urlencoded());
 
 		// connect the mongo connect with our session

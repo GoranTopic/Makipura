@@ -3,6 +3,15 @@ import bcrypt from 'bcrypt';
 
 const { Schema } = mongoose; // get the Schema obj from mongoose
 
+const ImageSchema = new Schema({ // schema for the images
+		type: String,
+		userid: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'User',
+				required: true,
+		},
+})
+
 const UserSchema = new Schema({ // create new Schma object
 		firstname:{
 				type: String, 
@@ -34,13 +43,15 @@ const UserSchema = new Schema({ // create new Schma object
 				unique: true, 
 				select: false,
 		},
-		image: {
-				type: String,
-		},
+		images: [ImageSchema],
 		admin:{
 				type: Boolean,
 				default: false,
-		}
+		},
+		dateCreate: {
+				type: Date,
+				default: new Date(),
+		},
 });
 
 // Hash the password before saving it 

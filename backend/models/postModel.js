@@ -3,7 +3,6 @@ import { currenciesList, conditionsList } from '../config/emunsAndLists.js';
 
 const { Schema } = mongoose; // get the Schema obj from mongoose
 
-
 const PostSchema = new Schema({ // create new Schma object
 		title:{
 				type: String,
