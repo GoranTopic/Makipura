@@ -17,23 +17,33 @@ const validateUploadedImages = (req, res, next) =>
 						// get file type 
 						if(type){ 
 								let result = type.ext.match(allowedFileTypes);
-								if(result) return { supported: true, type: type }; 
+								if(result) return { ...image, supported: true, type: type }; 
 								// is allowed
-								else return { supported: false, type: type };
+								else return { ...image, supported: false, type: type };
 								// is not allowed type
 						}else{ // unsuported type
-								return { supported: false, type: type }
+								return { ...image, supported: false, type: type }
 						}
 				})
 		)
 				.then(results => { 
 						let allpassed = results.every(result => result.supported);
 						if(allpassed) next();
-						else res.status(400)
-								.json({ 
-										status: 'failure', 
-										msg: 'file type not supported' 
-								});
+						else {  
+								results.forEach(image => fs.unlink(image.path, error => {
+										if(error) 
+												res.status(500) 
+														.json({ 
+																status: 'failure', 
+																msg: 'could not delete file' 
+														});
+								}));	
+								res.status(400) 
+										.json({ 
+												status: 'failure', 
+												msg: 'file type not supported' 
+										});
+						}
 				})
 				.catch(error => {
 						console.log(error);
