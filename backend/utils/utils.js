@@ -1,6 +1,6 @@
 import userModel from "../models/userModel.js";
 
-import { allowedPropertiesInRequest } from "../config/emunsAndLists.js";
+import { allowedPropertiesInRequest } from "./config.js";
 
 const allowedProperties = allowedPropertiesInRequest;
 /* this imported list must be of the form of:

@@ -1,10 +1,13 @@
 import express from 'express' ;
-import passport from "../config/passport.js";
-import { isAuthenticated, isNotAuthenticated, isAuthorized } from "../middlewares/authMiddlewares.js";
-import { queryPostById, queryUserByUsername, queryUserByCookie } from "../middlewares/queryMiddlewares.js";
-import { sendUser, updateUser, deleteUser, signupUser, signinUser, signoutUser, sendAllUsers, searchUser  } from "../controllers/userControllers.js"
-import { userValidators, updateUserValidators, validate } from '../middlewares/validationMiddlewares.js';
-import { cleanProperties  } from '../middlewares/utilsMiddlewares.js';
+import passport from "../auth/passport.js";
+import { isAuthenticated, isNotAuthenticated } from "../auth/authentication.js";
+import { isAuthorized } from "../auth/authorization.js";
+import { queryPostById, queryUserByUsername, queryUserByCookie } from "../queries/queries.js";
+import { 
+		sendUser, updateUser, deleteUser, signupUser, 
+		signinUser, signoutUser, sendAllUsers, searchUser  } from "../controllers/userControllers.js"
+import { userValidators, updateUserValidators, validate } from '../validation/formValidation.js';
+import { cleanProperties  } from '../utils/utils.js';
 import multer from 'multer'; // multer
 
 const userRouter = express.Router(); // get express router

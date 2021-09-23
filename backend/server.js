@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 // import configured passport 
-import passport from "./config/passport.js";
+import passport from "./auth/passport.js";
 
 // import routers
 import postRouter from "./routers/postRouter.js";

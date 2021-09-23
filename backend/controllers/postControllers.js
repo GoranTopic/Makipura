@@ -39,7 +39,9 @@ const sendPosts = (req, res, next) => {
 
 
 const createNewPost = (req, res, next) => {
-		const new_post = { ...req.body, userid: req.user._id  };
+		let userid  = req.user._id;
+		let images = req.files.image.map(image => { return { ...image, userid: userid }}); 
+		let new_post = { ...req.body, userid: userid, images: images  };
 		postModel.create(new_post, (error, post) => {
 				if(error) res.status(500).json({ error  }); // if there was an error
 				else res.status(200).json({ // post where found

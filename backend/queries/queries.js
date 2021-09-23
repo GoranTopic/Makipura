@@ -1,8 +1,9 @@
 // import post ot be able to query request
 /* this method query the databse for the resourse in question
  * it stores it in que req object to be user by other middleware 
- * down the line.
- * this i so that we don't have to query the database twice */
+ * down the line: req.resource = query
+ * this is so that we don't have to query the database twice */
+
 import postModel from "../models/postModel.js"; 
 import userModel from "../models/userModel.js";
 

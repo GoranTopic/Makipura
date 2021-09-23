@@ -1,7 +1,12 @@
 import { body, checkSchema, validationResult } from 'express-validator';
-import { blockedUsernames, phoneNumbersLocales, conditionsList, currenciesList } from "../config/emunsAndLists.js";
-import postModel from '../models/postModel.js'
-import userModel from '../models/userModel.js'
+import postModel from '../models/postModel.js';
+import userModel from '../models/userModel.js';
+import { allowedConditions, blockedUsernames, allowedCurrencies } from '../config.js'
+import {  isCurrencyOptions, isStrongPasswordOptions, 
+		isEmailOptions, normalizeEmailOptions,
+		phoneNumbersLocales, } from './config.js';
+
+let isOptional = true;
 
 let checkBlockedUsernames = blockedUsernames => username => {
 		// continue checking if it is one of the blocked usernames 
@@ -36,63 +41,6 @@ let lessThanPriceCap = price  => {
 		return ( value >=  cap )?  Promise.reject('Price cannot be higher than: ' + cap) : true
 }
 
-let isOptional = true;
-
-let isCurrencyOptions = {  
-		require_symbol: false, 
-		allow_space_after_symbol: false, 
-		symbol_after_digits: false, 
-		allow_negatives: false, 
-		parens_for_negatives: false, 
-		allow_negative_sign_placeholder: false, 
-		thousands_separator: ',', 
-		decimal_separator: '.', 
-		allow_decimal: true, 
-		digits_after_decimal: [2], 
-		allow_space_after_digits: false,
-}
-
-
-let isStrongPasswordOptions = {
-		minLength: 8, 
-		minLowercase: 1, 
-		minUppercase: 1, 
-		minNumbers: 1, 
-		minSymbols: 0,
-		returnScore: false, 
-		pointsPerUnique: 1, 
-		pointsPerRepeat: 0.5, 
-		pointsForContainingLower: 10, 
-		pointsForContainingUpper: 10, 
-		pointsForContainingNumber: 10, 
-		pointsForContainingSymbol: 10,
-}
-
-
-let isEmailOptions = {  
-		allow_display_name: false,
-		require_display_name: false,
-		allow_utf8_local_part: true,
-		require_tld: true,
-		allow_ip_domain: false,
-		domain_specific_validation: false,
-		ignore_max_length: true,
-		blacklisted_chars: ' ',
-}
-
-let normalizeEmailOptions = {
-		all_lowercase: true,
-		gmail_lowercase: true,
-		gmail_remove_dots: false,
-		gmail_remove_subaddress: true,
-		gmail_convert_googlemaildotcom: true,
-		outlookdotcom_lowercase: true,
-		yahoo_lowercase: true,
-		yahoo_remove_subaddress: true,
-		icloud_lowercase: true,
-		icloud_remove_subaddress: true,
-}
-
 const titleValidation = (isOptional=false) => 
 		body('title')
 				.optional(isOptional)
@@ -115,7 +63,7 @@ const currencyValidation = (isOptional=false) =>
 				.notEmpty().withMessage("cannot be empty")
 				.isLength({ min: 3, max: 3, }).withMessage('must be 3 characters')
 				.matches(/^[A-Z]*$/).withMessage('Currency code must contail only capial letters')
-				.matches(currenciesList.join("|"))
+				.matches(allowedCurrencies.join("|"))
 				.trim(' ')
 
 
@@ -132,8 +80,7 @@ const conditionValidation = (isOptional=false) =>
 		body('condition')
 				.optional(isOptional)
 				.notEmpty().withMessage("cannot be empty")
-				.matches(conditionsList.join("|"))
-
+				.matches(allowedConditions.join("|"))
 
 const usernameValidation = (isOptional=false) => 
 		body('username')
