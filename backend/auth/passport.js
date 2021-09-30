@@ -6,7 +6,6 @@ import passportFacebookOAth from 'passport-facebook';
 import bcrypt from 'bcrypt';
 import userModel from "../models/userModel.js"; // import user model
 import verifyOAuth from "./verifyOAuthUser.js";
-import { haveSameData } from "../utils/utils.js"; 
 
 // get eviroment  variables
 dotenv.config();
@@ -108,7 +107,7 @@ const facebookClientData = {
 
 const parseFacebookUserData = (profile) => {
 		return { // do for facebook
-				googleId: profile.id,
+				facebookid: profile.id,
 				username: "fb-" + profile.id, // usename must be a unique string, 
 				displayName: profile.displayName,
 				firstname: profile.name.givenName,
@@ -126,7 +125,6 @@ const facebookStrategy = new FacebookStrategy(facebookClientData, verifyFabookUs
 
 // use the the facebook OAuth in passport
 passport.use('facebook', facebookStrategy);
-
 
 export default passport;
 
