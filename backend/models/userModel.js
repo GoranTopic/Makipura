@@ -56,11 +56,13 @@ const UserSchema = new Schema({ // create new Schma object
 		},
 		googleId: {
 				type: String,
-				index: { unique: true, sparse: true },
+				unique: true, 
+				sparse: true,
 		},
 		facebookId: {
 				type: String,
-				index: { unique: true, sparse: true },
+				unique: true, 
+				sparse: true,
 		},
 		locale: {
 				type: String,
