@@ -77,7 +77,8 @@ const parseGoogleUserData = (profile) => {
 				displayName: profile.displayName,
 				firstname: profile.name.givenName,
 				lastname: profile.name.familyName,
-				profileImage: { path: profile._json.picture },
+				// this is avoid making a empty image obj in the db, if a image has not been passed
+				profileImage: profile._json.picture? { path: profile._json.picture } : undefined,
 				locale: profile._json.locale,
 				loginType: 'google',
 		} 
@@ -112,7 +113,8 @@ const parseFacebookUserData = (profile) => {
 				displayName: profile.displayName,
 				firstname: profile.name.givenName,
 				lastname: profile.name.familyName,
-				profileImage: { path: profile._json.picture },
+				// this is avoid making a empty image obj in the db, if a image has not been passed
+				profileImage: profile._json.picture? { path: profile._json.picture } : undefined,
 				loginType: 'facebook',
 		} 
 }

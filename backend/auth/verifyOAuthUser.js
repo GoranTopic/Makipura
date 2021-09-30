@@ -2,8 +2,6 @@ import userModel from "../models/userModel.js"; // import user model
 import { haveSameData } from "../utils/utils.js"; 
 /* this function is so bug it has a file a of its own, probly should take the creation of the user away and just leave the verification */
 
-
-
 /* Callback for veryfing user on OAth */
 const verifyOAuth = (company, userDataParser) => (accessToken, refreshToken, profile, done) => {
 		/* recives a profile data, from the user and check it in the database,
@@ -43,20 +41,15 @@ const verifyOAuth = (company, userDataParser) => (accessToken, refreshToken, pro
 								console.log(OAuthUser);
 								console.log(user);
 								console.log("user needs to update")
-								userModel.findOneAndUpdate( filter, OAuthUser, 
-										(error, user)  => { 
-												if(error){  
-														console.log("error updating user")
-														return done(error, null) 
-												}else{ // update successfull
-														return done(error, user)
-												} 
-										}
-								)
+								userModel.findOneAndUpdate( 
+										filter, OAuthUser, (error, user)  => done(error, user) 
+								);
 						}
 				}else{ // if user was not found
 						console.log("user not found, creating user in db");
 						// if user was not found create it in the db
+						console.log("creating user with");
+						console.log(OAuthUser)
 						userModel.create(OAuthUser, (error, user) => done(error, user));
 				}
 		});

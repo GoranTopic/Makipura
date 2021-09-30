@@ -8,7 +8,7 @@ const { Schema } = mongoose; // get the Schema obj from mongoose
 const UserSchema = new Schema({ // create new Schma object
 		firstname:{
 				type: String, 
-				required: true, 
+				required: false, 
 		},
 		lastname:{
 				type: String, 
@@ -90,15 +90,18 @@ UserSchema.pre('save', function(next, somethingelse, other){
 		else next();
 });
 
-// Tag profile images with userid before saving
+
+// Tag profile images with userid before saving a new user
 UserSchema.pre('save', function(next){
 		const user = this;
-		// has password 
+		// has picture
+		console.log(user.profileImage);
 		if(user.profileImage){ // if there is a profile passed
 				user.profileImage.userid = user._id;
 				next();
 		}else next() // if none found exit
 });
+
 
 const  UserModel = mongoose.model("User", UserSchema);
 console.log("User model made");
