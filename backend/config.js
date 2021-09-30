@@ -8,4 +8,6 @@ const allowedCurrencies = [ 'USD', ]
 
 const allowedFileTypes = [ 'jpg', 'png', 'jpeg' ]
 
-export  { allowedConditions, blockedUsernames, allowedCurrencies, allowedFileTypes};
+const loginTypes = ["local", "google", "facebook"]
+
+export  { allowedConditions, blockedUsernames, allowedCurrencies, allowedFileTypes, loginTypes};

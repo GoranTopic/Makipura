@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import express from "express";
-//import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoDBSession from "connect-mongodb-session";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from 'path';
 
 // import configured passport 
 import passport from "./auth/passport.js";
@@ -12,24 +12,27 @@ import passport from "./auth/passport.js";
 // import routers
 import postRouter from "./routers/postRouter.js";
 import userRouter from "./routers/userRouter.js";
+import authRouter from "./routers/authRouter.js";
 
 async function main() {
 
-		dotenv.config(); // run dot env to get enviroment variables
+		// run dot env to get enviroment variables
+		dotenv.config();
+		const ENV = process.env;
 
 		//  enviromental variables
-		const PORT = process.env.PORT;
-		const DATABASE_URL = process.env.DATABASE_URL;
-		const NAME_SPACE = process.env.NAME_SPACE;
-		const SECRET = process.env.SECRET;
+		const PORT = ENV.PORT;
+		const DATABASE_URL = ENV.DATABASE_URL;
+		const NAME_SPACE = ENV.NAME_SPACE;
+		const SECRET = ENV.SECRET;
 
 		// define middle ware to use in server
 		const server = express(); //make instance of express server
 		server.use(cors()); // use the middleware cors
 		// server static file in the public directory
-		server.use(express.static('public'));
 		server.use(express.json({ limit:'10kb' })); // use json middleware 
-		server.use(express.urlencoded());
+		server.use('/public', express.static(path.join('/home/telix/Makipura/backend', 'public')));
+		//server.use(express.urlencoded());
 
 		// connect the mongo connect with our session
 		const mongoSession = MongoDBSession(session); 
@@ -40,13 +43,13 @@ async function main() {
 				collection: "sessions",
 		});
 
-		// Server add middle ware session 
+		// Server add middleware session 
 		server.use(session({  // define value for the session 
-				secret: 'Keyboard-cat',  
+				secret: ENV.MIDDELWARE_SECRET,  
 				name: "maki-cookie", 
 				cookie : { 
 						// millisecons * second in a minute * minutes in an hour * hours in a day 
-						maxAge: 1000 * 60 * 60 * 24 
+						maxAge: 1000   * 60                 * 60                 * 24 
 				},
 				resave: true, // for every reques to he server, resets the session cookie
 				saveUninitialized: true, // Do not save the session after is has not been modified
@@ -70,7 +73,9 @@ async function main() {
 		// define routes to use here
 		server.use('/post/', postRouter);
 		// define routes for users,
-		server.use('/user/', userRouter);
+		server.use('/user', userRouter);
+		// defined routes fro authorization
+		server.use('/auth', authRouter);
 		// define routes for converstion 
 		// define routes for messages
 		// define a global route thath catches any get requests

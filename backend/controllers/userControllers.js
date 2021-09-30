@@ -45,9 +45,11 @@ const updateUser = (req, res, next) => {
 
 const signupUser = (req, res, next) => {
 		/* create user in the db */
-		let user = req.body;
+		let user = { ...req.body, 
+				displayName: req.firstname + " " + req.lastname, 
+				loginType: 'local' }
 		userModel.create(user, (error, user) => {
-				if(error) res.status(500).json({ error}); // delete for production
+				if(error) res.status(500).json({ error: error }); // delete for production
 				else res.json({ status: "success" });
 		});
 }

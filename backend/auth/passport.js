@@ -1,10 +1,21 @@
+import dotenv from "dotenv";
 import passport from 'passport';
 import passportLocal from 'passport-local';
+import passportGoogleOAth from 'passport-google-oauth';
+import passportFacebookOAth from 'passport-facebook';
 import bcrypt from 'bcrypt';
 import userModel from "../models/userModel.js"; // import user model
+import verifyOAuth from "./verifyOAuthUser.js";
+import { haveSameData } from "../utils/utils.js"; 
 
+// get eviroment  variables
+dotenv.config();
+const ENV = process.env;
+
+// local strategy fro storing password
 const LocalStrategy = passportLocal.Strategy ;
 
+// global config for passport
 const passportConfig = "";
 
 const customFields = {
@@ -12,7 +23,8 @@ const customFields = {
 		passwordField: "password"
 }
 
-const verifyCallback = (username, password, done) => {
+const verifyLocalCallback = (username, password, done) => {
+		/* this function that check is the passwod is true*/
 		userModel.findOne({ username: username }).select("+password")
 				.then( (user) => {
 						if(user) bcrypt.compare(password, user.password, (error, same) =>{
@@ -25,20 +37,96 @@ const verifyCallback = (username, password, done) => {
 				}).catch(e => done(e)); //pass any errors to passport
 }
 
+// create a new local strategy intance, with the fileds and verify callback
+const localStrategy = new LocalStrategy(customFields, verifyLocalCallback);
 
-const strategy = new LocalStrategy(customFields, verifyCallback);
-
-passport.use(strategy);
 
 passport.serializeUser((user, done) => {
-		done(null, user.id);
+		/* serilize user to the session, only pass the id, to the session
+				* instead of the whole object*/
+		done(null, user.id); 
 });
 
-passport.deserializeUser((userId, done) => {
+passport.deserializeUser((userId, done) => 
+		/* query the databse for the id in the session
+		* and query the databse for the user info to populate req.user */
 		userModel.findById(userId)
 				.then((user) => { done(null, user); })
 				.catch(err => done(err))
-});
+);
+
+
+// use the local stategy in the passport
+passport.use('local', localStrategy);
+
+/* ------------- google OAuth strategy ----------- */
+
+const GoogleStrategy = passportGoogleOAth.OAuth2Strategy;
+
+const googleClientData = {
+		/* this is obj contains the data for the client who is
+		* trying to comunicate with the OAuth google server */
+		clientID: ENV.GOOGLE_OATH_CLIENT_ID,
+		clientSecret: ENV.GOOGLE_OATH_CLIENT_SECRET,
+		callbackURL: "http://localhost:5000/auth/google/callback",
+}
+
+const parseGoogleUserData = (profile) => {
+		return {
+				googleId: profile.id,
+				username: "g-" + profile.id, // usename must be a unique string, 
+				displayName: profile.displayName,
+				firstname: profile.name.givenName,
+				lastname: profile.name.familyName,
+				profileImage: { path: profile._json.picture },
+				locale: profile._json.locale,
+				loginType: 'google',
+		} 
+}
+
+// create a call back function 
+const verifyGoogleUser = verifyOAuth('google', parseGoogleUserData);
+
+//create a Google strategy instance
+const googleStrategy = new GoogleStrategy(googleClientData, verifyGoogleUser);
+
+// use the the google OAuth in passport
+passport.use('google', googleStrategy);
+
+
+/* ------------- facebook OAuth strategy ----------- */
+
+const FacebookStrategy = passportFacebookOAth.Strategy;
+
+const facebookClientData = {
+		/* this is obj contains the data for the client who is
+		* trying to comunicate with the OAuth facebook server */
+    clientID: ENV.FACEBOOK_OATH_CLIENT_ID,
+    clientSecret: ENV.FACEBOOK_OATH_CLIENT_SECRET,
+    callbackURL: "http://localhost:5000/auth/facebook/callback"
+  }
+
+const parseFacebookUserData = (profile) => {
+		return { // do for facebook
+				googleId: profile.id,
+				username: "fb-" + profile.id, // usename must be a unique string, 
+				displayName: profile.displayName,
+				firstname: profile.name.givenName,
+				lastname: profile.name.familyName,
+				profileImage: { path: profile._json.picture },
+				loginType: 'facebook',
+		} 
+}
+
+// make verify user function
+const verifyFabookUser = verifyOAuth('facebook', parseFacebookUserData);
+
+//create a facebook strategy instance
+const facebookStrategy = new FacebookStrategy(facebookClientData, verifyFabookUser);
+
+// use the the facebook OAuth in passport
+passport.use('facebook', facebookStrategy);
+
 
 export default passport;
 

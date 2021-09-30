@@ -1,36 +1,9 @@
 import mongoose from 'mongoose'; // import mongoose 
+import ImageSchema from './imageSchema.js';
 import { allowedCurrencies, allowedConditions } from '../config.js';
 
 const { Schema } = mongoose; // get the Schema obj from mongoose
 
-
-const ImageSchema = new Schema({ // schema for the images
-		encoding:{
-				type: String,
-				required: true,
-		},
-		mimeType:{
-				type: String,
-				required: true,
-		},
-		filename:{
-				type: String,
-				required: true,
-		},
-		path:{
-				type: String,
-				required: true,
-		},
-		size:{
-				type: String,
-				required: true,
-		},
-		userid: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'User',
-				required: true,
-		},
-})
 
 const PostSchema = new Schema({ // create new Schma object
 		title:{

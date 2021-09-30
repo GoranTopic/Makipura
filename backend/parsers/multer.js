@@ -66,5 +66,4 @@ const multiFormHandler = (req, res, next) => {
 		});
 }
 
-
 export  { multiFormHandler }  
