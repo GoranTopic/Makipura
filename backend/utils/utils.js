@@ -1,5 +1,4 @@
 import userModel from "../models/userModel.js";
-
 import { allowedPropertiesInRequest } from "./config.js";
 
 const allowedProperties = allowedPropertiesInRequest;
@@ -18,7 +17,6 @@ const allowedProperties = allowedPropertiesInRequest;
  *		password: true,
  *		email: true,
  *} */
-
 
 const cleanProperties = (req, res, next) => {
 		/* clean the json of any unwanted properties */

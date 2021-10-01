@@ -14,7 +14,9 @@ const UserSchema = new Schema({ // create new Schma object
 				type: String, 
 				required: false, 
 		},
-		username:{
+		username:{ 
+				//username is out primary use idetifier, 
+				//under no circustances it can be not unique
 				type: String,
 				required: true,
 				unique: true, 
@@ -40,6 +42,7 @@ const UserSchema = new Schema({ // create new Schma object
 				//required: true,
 				unique: true, 
 				select: false,
+				sparse: true,
 		},
 		admin:{
 				type: Boolean,
@@ -68,6 +71,7 @@ const UserSchema = new Schema({ // create new Schma object
 				type: String,
 		},
 		profileImage: ImageSchema,
+		backgroundImage: ImageSchema,
 });
 
 
@@ -91,16 +95,30 @@ UserSchema.pre('save', function(next, somethingelse, other){
 });
 
 
+/* these functions could be merged */
 // Tag profile images with userid before saving a new user
 UserSchema.pre('save', function(next){
 		const user = this;
 		// has picture
-		console.log(user.profileImage);
 		if(user.profileImage){ // if there is a profile passed
 				user.profileImage.userid = user._id;
 				next();
 		}else next() // if none found exit
 });
+
+
+// Tag background images with userid before saving a new user
+UserSchema.pre('save', function(next){
+		const user = this;
+		// has picture
+		if(user.backgroundImage){ // if there is a backgroundImage passed
+				user.backgroundImage.userid = user._id;
+				next();
+		}else next() // if none found exit
+});
+
+
+
 
 
 const  UserModel = mongoose.model("User", UserSchema);

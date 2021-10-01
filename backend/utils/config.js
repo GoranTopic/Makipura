@@ -12,6 +12,8 @@ const allowedPropertiesInRequest = {
 		images: true,
 		password: true,
 		email: true,
+		profileImage: true,
+		backgroundImage: true,
 }
 
 export { allowedPropertiesInRequest }

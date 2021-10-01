@@ -46,8 +46,13 @@ const updateUser = (req, res, next) => {
 const signupUser = (req, res, next) => {
 		/* create user in the db */
 		let user = { ...req.body, 
-				displayName: req.firstname + " " + req.lastname, 
-				loginType: 'local' }
+				displayName: req.body.firstname + " " + req.body.lastname, 
+				loginType: 'local',
+				profileImage: req.files.profileImage? //if image has been passed
+				req.files.profileImage[0] : undefined,
+				background: req.files.background? 
+				req.files.background[0] : undefined,
+		}
 		userModel.create(user, (error, user) => {
 				if(error) res.status(500).json({ error: error }); // delete for production
 				else res.json({ status: "success" });

@@ -13,8 +13,8 @@ const authRouter = express.Router(); // get express router
 authRouter.route('/signup')
 		.post(
 				isNotAuthenticated, // if it is not logged it turn away
-				multiFormHandler,
 				cleanProperties,
+				multiFormHandler,
 				validate( userValidators ), // run validators
 				signupUser
 		);

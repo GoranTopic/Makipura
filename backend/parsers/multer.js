@@ -39,7 +39,7 @@ const imageFilter = (req, file, cb) => {
 const upload = multer({
 		storage: diskStorage,
 		limits: {
-				fileSize: 10000000,// number of bytes
+				fileSize: 1000000000000,// number of bytes
 				fields: 10,
 				files: 10,
 		},
@@ -47,7 +47,13 @@ const upload = multer({
 		preservePath: true,
 });
 
-const imageUploader = upload.fields([{ name: 'image', maxCount: 6 },]);
+
+// image uploader
+const imageUploader = upload.fields([
+		{ name: 'image', maxCount: 6 },
+		{ name: 'profileImage', maxCount: 1 },
+		{ name: 'backgroundImage', maxCount: 1 },
+]);
 
 const multiFormHandler = (req, res, next) => {
 		/* this function uploads the images and parse the ultiform text */
