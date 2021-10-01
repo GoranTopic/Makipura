@@ -39,7 +39,6 @@ const verifyLocalCallback = (username, password, done) => {
 // create a new local strategy intance, with the fileds and verify callback
 const localStrategy = new LocalStrategy(customFields, verifyLocalCallback);
 
-
 passport.serializeUser((user, done) => {
 		/* serilize user to the session, only pass the id, to the session
 				* instead of the whole object*/
@@ -53,7 +52,6 @@ passport.deserializeUser((userId, done) =>
 				.then((user) => { done(null, user); })
 				.catch(err => done(err))
 );
-
 
 // use the local stategy in the passport
 passport.use('local', localStrategy);
@@ -78,7 +76,10 @@ const parseGoogleUserData = (profile) => {
 				firstname: profile.name.givenName,
 				lastname: profile.name.familyName,
 				// this is avoid making a empty image obj in the db, if a image has not been passed
-				profileImage: profile._json.picture? { path: profile._json.picture } : undefined,
+				profileImage: profile._json.picture? 
+					{ path: profile._json.picture } : undefined,
+				backgroundImage: profile._json.background? 
+					{ path: profile._json.background } : undefined,
 				locale: profile._json.locale,
 				loginType: 'google',
 		} 
@@ -114,7 +115,10 @@ const parseFacebookUserData = (profile) => {
 				firstname: profile.name.givenName,
 				lastname: profile.name.familyName,
 				// this is avoid making a empty image obj in the db, if a image has not been passed
-				profileImage: profile._json.picture? { path: profile._json.picture } : undefined,
+				profileImage: profile._json.picture? 
+					{ path: profile._json.picture } : undefined,
+				backgroundImage: profile._json.background? 
+					{ path: profile._json.background } : undefined,
 				loginType: 'facebook',
 		} 
 }

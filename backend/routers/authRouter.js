@@ -46,6 +46,11 @@ authRouter.route('/google')
 				}),
 		);
 
+authRouter.route('/facebook')
+		.get(
+				passport.authenticate('facebook'),
+		);
+
 authRouter.route('/google/callback')
 		.get( 
 				passport.authenticate('google', { failureRedirect: '/login'  }),
@@ -54,11 +59,6 @@ authRouter.route('/google/callback')
 						res.status(200).json({ status: 'success' });
 				  
 		});
-
-authRouter.route('/facebook')
-		.get(
-				passport.authenticate('facebook'),
-		);
 
 authRouter.route('/facebook/callback')
 		.get( 

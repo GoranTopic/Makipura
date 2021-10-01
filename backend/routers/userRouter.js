@@ -7,7 +7,6 @@ import { sendUser, updateUser, deleteUser,
 		sendAllUsers, searchUser  } from "../controllers/userControllers.js"
 import { userValidators, updateUserValidators, validate } from '../validation/formValidation.js';
 import { cleanProperties  } from '../utils/utils.js';
-import multer from 'multer'; // multer
 
 const userRouter = express.Router(); // get express router
 
@@ -43,6 +42,5 @@ userRouter.route('/:username/')
 				isAuthorized,
 				deleteUser
 		);
-
 
 export default userRouter;
