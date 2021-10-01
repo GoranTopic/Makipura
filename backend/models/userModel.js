@@ -101,7 +101,7 @@ UserSchema.pre('save', function(next){
 		const user = this;
 		// has picture
 		if(user.profileImage){ // if there is a profile passed
-				user.profileImage.userid = user._id;
+				user.profileImage.userid = user.username;
 				next();
 		}else next() // if none found exit
 });
@@ -112,7 +112,7 @@ UserSchema.pre('save', function(next){
 		const user = this;
 		// has picture
 		if(user.backgroundImage){ // if there is a backgroundImage passed
-				user.backgroundImage.userid = user._id;
+				user.backgroundImage.userid = user.username;
 				next();
 		}else next() // if none found exit
 });

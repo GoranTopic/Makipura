@@ -7,7 +7,7 @@ const pick = (obj, arr) =>
 				(record in obj && (acc[record] = obj[record]), acc), {});
 
 // user selected field to send back
-const selectFields = ['username', 'firstname', 'lastname', 'image'];
+const selectFields = ['username', 'firstname', 'lastname', 'profileImage', 'backgroundImage'];
 
 // check resource is passedin req
 const checkResource = (resource) => resource || res.status(500).json({ status: 'faliure', msg: 'resource not queried' })
@@ -15,7 +15,7 @@ const checkResource = (resource) => resource || res.status(500).json({ status: '
 const sendUser = (req, res, next) => {
 		/* from a given user stored in req.resource, remove unwanted fields
 		 * and return to client */
-		checkResource(req.resource);
+		checkResource(req.resource); // check if user has already been queried
 		let user =  pick(req.resource, selectFields)  ; // get user from query
 		if(user) res.json(user);
 		else res.status(500).json({ status: `faliure` });
@@ -50,8 +50,8 @@ const signupUser = (req, res, next) => {
 				loginType: 'local',
 				profileImage: req.files.profileImage? //if image has been passed
 				req.files.profileImage[0] : undefined,
-				background: req.files.background? 
-				req.files.background[0] : undefined,
+				backgroundImage: req.files.backgroundImage? 
+				req.files.backgroundImage[0] : undefined,
 		}
 		userModel.create(user, (error, user) => {
 				if(error) res.status(500).json({ error: error }); // delete for production
