@@ -1,25 +1,20 @@
 import Stripe from 'stripe';
 import express from 'express';
+import dotenv from 'dotenv';
+
+// run dot env to get enviroment variables
+dotenv.config();
+const ENV = process.env;
 
 const stripe = Stripe("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 const paymentRouter = express.Router();
 
-paymentRouter.route('/intent')
-		.get(
-				async (req, res) => {
-						const { items } = req.body;
 
-						// Create a PaymentIntent with the order amount and currency
-						const paymentIntent = await stripe.paymentIntents.create({
-								amount: 100, //calculateOrderAmount(items),
-								currency: "usd"
-						});
-
-						res.send({
-								clientSecret: paymentIntent.client_secret
-						});
-						
+paymentRouter.route('/config')
+// send the public key to client when requested
+		.get((req, res) => {
+						res.send({ publishableKey: ENV.STRIPE_PUBLIC_KEY });
 				});
 
 export default paymentRouter
