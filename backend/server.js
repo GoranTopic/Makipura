@@ -6,8 +6,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from 'path';
 
-
-
 // import configured passport 
 import passport from "./auth/passport.js";
 

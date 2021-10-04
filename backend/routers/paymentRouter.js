@@ -1,20 +1,30 @@
-import Stripe from 'stripe';
 import express from 'express';
-import dotenv from 'dotenv';
-
-// run dot env to get enviroment variables
-dotenv.config();
-const ENV = process.env;
-
-const stripe = Stripe("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
+import { isAuthenticated } from "../auth/authentication.js";
+import { sendPublicKey, createPaymentIntent, handleWebhookRespose } from '../payment/payments.js';
 
 const paymentRouter = express.Router();
 
+const calculateTotal = (items) => {
+		// caculates the toal amount for the items wanting to buy
+		return 1000; // fro now just return tem dollars
+}
 
 paymentRouter.route('/config')
-// send the public key to client when requested
-		.get((req, res) => {
-						res.send({ publishableKey: ENV.STRIPE_PUBLIC_KEY });
-				});
+		.get(	
+				//isAuthenticated,
+				sendPublicKey,
+		);
+
+paymentRouter.route('/create-payment-intent')
+		.post(
+				//isAuthenticated,
+				createPaymentIntent,
+		);
+
+
+paymentRouter.route('/Webhook')
+		.post(
+				handleWebhookRespose,
+		)
 
 export default paymentRouter
