@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from 'path';
 
+
+
 // import configured passport 
 import passport from "./auth/passport.js";
 
@@ -13,6 +15,8 @@ import passport from "./auth/passport.js";
 import postRouter from "./routers/postRouter.js";
 import userRouter from "./routers/userRouter.js";
 import authRouter from "./routers/authRouter.js";
+import paymentRouter from "./routers/paymentRouter.js";
+
 
 async function main() {
 
@@ -74,8 +78,10 @@ async function main() {
 		server.use('/post/', postRouter);
 		// define routes for users,
 		server.use('/user', userRouter);
-		// defined routes fro authorization
+		// defined routes for authorization
 		server.use('/auth', authRouter);
+		// define routes for payment 
+		server.use('/payment', paymentRouter);
 		// define routes for converstion 
 		// define routes for messages
 		// define a global route thath catches any get requests
