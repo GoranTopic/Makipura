@@ -14,6 +14,7 @@ import postRouter from "./routers/postRouter.js";
 import userRouter from "./routers/userRouter.js";
 import authRouter from "./routers/authRouter.js";
 import paymentRouter from "./routers/paymentRouter.js";
+import emailVerificationRouter from "./email-verification/routes.js"
 
 
 async function main() {

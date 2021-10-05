@@ -70,6 +70,14 @@ const UserSchema = new Schema({ // create new Schma object
 		locale: {
 				type: String,
 		},
+		emailVerified:{
+				type: Boolean,
+				default: false,
+		},
+		phoneVerified:{
+				type: Boolean,
+				default: false,
+		},
 		isVerified:{
 				type: Boolean,
 				default: false,
@@ -122,11 +130,6 @@ UserSchema.pre('save', function(next){
 		}else next() // if none found exit
 });
 
-
-
-
-
 const  UserModel = mongoose.model("User", UserSchema);
-console.log("User model made");
 
 export default UserModel;

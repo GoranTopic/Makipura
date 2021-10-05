@@ -16,4 +16,7 @@ const allowedPropertiesInRequest = {
 		backgroundImage: true,
 }
 
-export { allowedPropertiesInRequest }
+
+const codeLength = 21;
+
+export { allowedPropertiesInRequest, codeLength }

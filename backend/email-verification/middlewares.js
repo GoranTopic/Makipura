@@ -11,24 +11,5 @@ const hasEmail = (req, res, next) => {
 		});
 }
 
-const doesTokenExists = (req, res, next) => {
-		/* check is a token is in the db token collection*/
-		let token = req.params.token; // get token
-		tokenModel.exists({ token }, 
-				(error, result) => {  
-						if(error) res.status(500).json({
-								status: "failure", 
-								msg: error,
-						})
-						else{  
-								if(result){ // if token found in db, add to req 
-										req.token = token;
-										next();
-								}else res.status(404).json({ error: "not found" });
-						}
-				}
-		);
-}
-
-export { hasEmail, doesTokenExists }
+export { hasEmail }
 

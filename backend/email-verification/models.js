@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'; // import mongoose 
-import { v4 as uuid } from 'uuid';
+import { genRandomCode } from './utils.js';
 import { token_expiration_time } from './config.js';
 
 const { Schema } = mongoose; // get the Schema obj from mongoose
@@ -8,16 +8,16 @@ const tokenSchema = new mongoose.Schema({
 		userid: { 
 				type: mongoose.Schema.Types.ObjectId, 
 				required: true, 
-				ref: 'User'  
+				ref: 'User',
 				unique: true,
 		},
 		token: { 
 				type: String, 
-				required: true  
 				unique: true,
+				required: true,
 				default: function() { // create random uuid
-						return uuid();
-				}
+						return genRandomCode();
+				},
 		},
 		createdAt: { 
 				type: Date, 

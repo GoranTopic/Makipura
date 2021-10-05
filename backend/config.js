@@ -10,4 +10,5 @@ const allowedFileTypes = [ 'jpg', 'png', 'jpeg' ]
 
 const loginTypes = ["local", "google", "facebook"]
 
-export  { allowedConditions, blockedUsernames, allowedCurrencies, allowedFileTypes, loginTypes};
+
+export  { allowedConditions, blockedUsernames, allowedCurrencies, allowedFileTypes, loginTypes };
