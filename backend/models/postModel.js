@@ -53,6 +53,5 @@ const PostSchema = new Schema({ // create new Schma object
 });
 
 const  postModel = mongoose.model("Post", PostSchema);
-console.log("post model made");
 
 export default  postModel;

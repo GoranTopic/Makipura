@@ -70,8 +70,13 @@ const UserSchema = new Schema({ // create new Schma object
 		locale: {
 				type: String,
 		},
+		isVerified:{
+				type: Boolean,
+				default: false,
+		},
 		profileImage: ImageSchema,
 		backgroundImage: ImageSchema,
+
 });
 
 

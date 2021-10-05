@@ -34,11 +34,13 @@
     "mongodb": "^4.1.1",
     "mongoose": "^6.0.5",
     "multer": "^1.4.3",
+    "nodemailer": "^6.6.5",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
-    "stripe": "^8.178.0"
+    "stripe": "^8.178.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

@@ -15,8 +15,8 @@ const queryPostById = (req, res, next)  =>{
 		postModel.findById(id)
 				.populate('userid', '-admin -__v', )
 				.exec((error, post) => {
-						if(error) res.status(500);
-						if(!post)  res.status(404).json( { status: "faliure", msg: "post not found" });
+						if(error) res.status(500).json({error});
+						else if(!post) res.status(404).json( { status: "faliure", msg: "post not found" });
 						else{
 								req.resourceType = "post"; 
 								req.resource = post;
@@ -45,7 +45,7 @@ const queryUserByUsername = (req, res, next) => {
 		 * and store it in resources */
 		let username = req.params.username;
 		userModel.findOne({ username }, (error, user)=> {
-				if(error) res.status(500);
+				if(error) res.status(500).json({ error });
 				else if(!user) res.status(404).json( { status: "faliure", msg: "user not found" });
 				else{
 						req.resourceType = "user"; 
@@ -60,8 +60,8 @@ const queryUserByCookie = (req, res, next)  =>{
 		 * and return the user  */
 		let { id } = req.user; // get user id from logged in user
 		userModel.findById(id, (error, user)=> {
-				if(error) res.status(500);
-				if(!user) res.status(404).json( { status: "faliure", msg: "user not found" });
+				if(error) res.status(500).json({ error });
+				else if(!user) res.status(404).json( { status: "faliure", msg: "user not found" });
 				else{
 						req.resourceType = "post"; 
 						req.resource = user;
