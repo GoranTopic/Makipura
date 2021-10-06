@@ -49,6 +49,26 @@ const findToken = (req, res, next) => {
 		);
 }
 
+const emailExists = (req, res, next) => {
+		/* check the database for the a passed email, 
+		 * if found, attach to req, as req.email */
+		let email = req.body.email; // get email
+		userModel.exists({ email }, 
+				(error, email) => {  
+						if(error) res.status(500).json({
+								status: "failure", 
+								msg: error,
+						})
+						else{  
+								if(email){ // if email found 
+										req.email = email;
+										next();
+								}else res.status(404).json({ error: "not found" });
+						}
+				}
+		);
+}
+
 const sendEmail = (req, res, next) => {
 		/* With a given user in req which has been verified to have a email. 
 		 * Send email with given token in req. */
@@ -59,9 +79,9 @@ const sendEmail = (req, res, next) => {
 		let mailerOptions ={ // define options for the mailer
 				from: sender,
 				to: recipentMail,
-				subject: "Email Confirmation",
+				subject: "Password Recovery",
 				html: `
-				<p> you verification code is ${token} </p>
+				<p> you recovery code is ${token} </p>
 				<p> use it to verify you email address. </p>
 				<p> This code will expire in ${token_expiration_time} from ${token.createdAt} </p>
 				`
@@ -75,7 +95,7 @@ const sendEmail = (req, res, next) => {
 				}
 		});
 		// send mail
-		Trasport.sendMail(mailerOptions, (error, response)=>{
+		Trasport.sendMail(mailerOptions, (error, response) => {
 				if(error) res.status(500).json({
 						status: "failure", 
 						msg: error,
@@ -84,22 +104,18 @@ const sendEmail = (req, res, next) => {
 		});
 }
 
-const verifyUser = (req, res, next) => {
-		// verifies an user, from a given user in 
-		let userid = req.tokenUser._id;
-		userModel.findByIdAndUpdate(
-				userid,  // filter
-				{ emailVerified: true, isVerified: true }, // update
-				(error, result) => { // callback
-						if(error) res.status(500).json({
-								status: "failure", 
-								msg: error,
-						})
-						else{  
-								if(result) next(); // was toeken was found
-								else res.status(404).json({ error: "user not found" });
-						}
-				});
+const updatePassword = (req, res, next) => {
+		/* this function takes a password passed, 
+		 * and updates the user, with the user. */
+		let password = req.password;
+		let userid = req.user._id;
+		userModel.findByIdAndUpdate(userid, { password }, (error, response) => {
+				if(error) res.status(500).json({
+						status: "failure", 
+						msg: error,
+				})
+				else next() // pass to the next step
+		});
 }
 
 const deleteToken = (req, res, next) => {
@@ -110,6 +126,5 @@ const deleteToken = (req, res, next) => {
 		});
 }
 
-
-export { createToken, findToken, sendEmail, verifyUser, deleteToken };
+export { createToken, findToken, emailExists, sendEmail, deleteToken, updatePassword };
 

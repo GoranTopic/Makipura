@@ -14,7 +14,8 @@ import postRouter from "./routers/postRouter.js";
 import userRouter from "./routers/userRouter.js";
 import authRouter from "./routers/authRouter.js";
 import paymentRouter from "./routers/paymentRouter.js";
-import emailVerificationRouter from "./email-verification/routes.js"
+import emailVerificationRouter from "./email-verification/routes.js";
+import passwordRecoveryRouter from "./password-recovery/routes.js";
 
 // run dot env to get enviroment variables
 dotenv.config();
@@ -75,6 +76,10 @@ server.use('/user', userRouter);
 server.use('/auth', authRouter);
 // define routes for payment 
 server.use('/payment', paymentRouter);
+// emai verification 
+server.use('/email-verification', passwordRecoveryRouter);
+// recover password
+server.use('/recovery', passwordRecoveryRouter);
 // define routes for converstion 
 // define routes for messages
 // define a global route thath catches any get requests
