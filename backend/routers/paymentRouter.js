@@ -11,13 +11,13 @@ const calculateTotal = (items) => {
 
 paymentRouter.route('/config')
 		.get(	
-				//isAuthenticated,
+				isAuthenticated,
 				sendPublicKey,
 		);
 
 paymentRouter.route('/create-payment-intent')
 		.post(
-				//isAuthenticated,
+				isAuthenticated,
 				createPaymentIntent,
 		);
 

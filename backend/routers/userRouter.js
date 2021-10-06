@@ -15,7 +15,6 @@ userRouter.route('/all/:page?')
 				sendAllUsers
 		);
 
-
 userRouter.route('/whoami')
 		.get(
 				isAuthenticated,

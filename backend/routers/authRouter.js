@@ -10,15 +10,6 @@ import { multiFormHandler  } from '../parsers/multer.js';
 
 const authRouter = express.Router(); // get express router
 
-authRouter.route('/signup')
-		.post(
-				isNotAuthenticated, // if it is not logged it turn away
-				cleanProperties,
-				multiFormHandler,
-				validate( userValidators ), // run validators
-				signupUser
-		);
-
 authRouter.route('/signin')
 		.post( 
 				multiFormHandler,
@@ -29,6 +20,17 @@ authRouter.route('/signin')
 				passport.authenticate('local'), 
 				signinUser
 		);
+
+authRouter.route('/signup')
+		.post(
+				isNotAuthenticated, // if it is not logged it turn away
+				cleanProperties,
+				multiFormHandler,
+				validate( userValidators ), // run validators
+				signupUser
+		);
+
+
 
 authRouter.route('/signout')
 		.post(
