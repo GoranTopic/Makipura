@@ -1,4 +1,4 @@
-import userModel from "../models/userModel.js";
+import userModel from "../users/models.js";
 import tokenModel  from "./models.js"
 
 const hasEmail = (req, res, next) => {

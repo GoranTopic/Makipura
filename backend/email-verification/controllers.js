@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from "dotenv";
-import userModel from "../models/userModel.js";
+import userModel from "../users/models.js";
 import tokenModel from "./models.js";
 import { token_expiration_time, mail_sender } from "./config.js";
 

@@ -1,6 +1,6 @@
 import { body, checkSchema, validationResult } from 'express-validator';
 import postModel from '../models/postModel.js';
-import userModel from '../models/userModel.js';
+import userModel from '../users/models.js';
 import { allowedConditions, blockedUsernames, allowedCurrencies } from '../config.js'
 import {  isCurrencyOptions, isStrongPasswordOptions, 
 		isEmailOptions, normalizeEmailOptions,

@@ -3,7 +3,7 @@
  * it stores it in que req object to be user by other middleware 
  * down the line: req.resource = query
  * this is so that we don't have to query the database twice */
-import userModel from "../models/userModel.js";
+import userModel from "../users/models.js";
 import tokenModel from "./models.js";
 
 const queryUserByToken = (req, res, next)  =>{

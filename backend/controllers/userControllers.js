@@ -1,4 +1,4 @@
-import userModel from "../models/userModel.js";
+import userModel from "../users/models.js";
 import bcrypt from 'bcrypt';
 
 // function for picking only some field from an object

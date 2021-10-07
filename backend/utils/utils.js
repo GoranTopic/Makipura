@@ -1,4 +1,4 @@
-import userModel from "../models/userModel.js";
+import userModel from "../users/models.js";
 import { allowedPropertiesInRequest, codeLength } from "./config.js";
 
 const allowedProperties = allowedPropertiesInRequest;
@@ -30,7 +30,6 @@ const cleanProperties = (req, res, next) => {
 		next();
 }
 
-
 const haveSameData = function (obj1, obj2) {
 		/* if for every property in obj1, 
 		 * obj2 has the same value, return true
@@ -40,6 +39,5 @@ const haveSameData = function (obj1, obj2) {
 				&& obj2[key] === obj1[key]);
 		return false;
 }
-
 
 export { cleanProperties, haveSameData };

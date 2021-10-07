@@ -10,8 +10,8 @@ import path from 'path';
 import passport from "./auth/passport.js";
 
 // import routers
+import userRouter from "./users/router.js";
 import postRouter from "./routers/postRouter.js";
-import userRouter from "./routers/userRouter.js";
 import authRouter from "./routers/authRouter.js";
 import paymentRouter from "./routers/paymentRouter.js";
 import emailVerificationRouter from "./email-verification/routes.js";

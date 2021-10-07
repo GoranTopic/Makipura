@@ -1,4 +1,4 @@
-import userModel from "../models/userModel.js"; // import user model
+import userModel from "../users/models.js" // import user model
 import { haveSameData } from "../utils/utils.js"; 
 /* this function is so bug it has a file a of its own, probly should take the creation of the user away and just leave the verification */
 

@@ -5,7 +5,7 @@
  * this is so that we don't have to query the database twice */
 
 import postModel from "../models/postModel.js"; 
-import userModel from "../models/userModel.js";
+import userModel from "../users/models.js";
 
 
 const queryPostById = (req, res, next)  =>{

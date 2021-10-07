@@ -4,7 +4,7 @@ import passportLocal from 'passport-local';
 import passportGoogleOAth from 'passport-google-oauth';
 import passportFacebookOAth from 'passport-facebook';
 import bcrypt from 'bcrypt';
-import userModel from "../models/userModel.js"; // import user model
+import userModel from "../users/models.js"; // import user model
 import verifyOAuth from "./verifyOAuthUser.js";
 
 // get eviroment  variables
