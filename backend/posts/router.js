@@ -1,14 +1,13 @@
 import express from 'express' ;
+import { queryPostById, queryAllPost } from './queries.js';
+import { sendHomePagePosts, sendPosts, 
+		sendPost, createNewPost, updatePost, deletePost } from  './controllers.js';
+import { postValidators, updatePostValidators, validate } from './validators.js';
+import { cleanProperties } from './utils.js';
 import { isAuthorized } from '../auth/authorization.js';
 import { isAuthenticated } from '../auth/authentication.js';
-import { queryPostById, queryAllPost } from '../queries/queries.js';
-import { 
-		sendHomePagePosts, sendPosts, sendPost, 
-		createNewPost, updatePost, deletePost } from  '../controllers/postControllers.js';
-import { cleanProperties  } from '../utils/utils.js';
-import { postValidators, updatePostValidators, validate } from '../validation/formValidation.js';
-import { validateImages } from '../validation/imageValidation.js';
-import { multiFormHandler  } from '../parsers/multer.js';
+import { validateImages } from '../images/validators.js';
+import { multiFormHandler } from '../multi-form-parser/multer.js';
 
 const postRouter = express.Router(); // get express router
 

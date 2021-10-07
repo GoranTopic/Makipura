@@ -1,4 +1,4 @@
-import postModel from "../models/postModel.js";
+import postModel from "../posts/models.js";
 
 const isAuthenticated = (req, res, next) => { 
 		/* throws an error if it gets an reques from an  non-authenticated user */
@@ -17,4 +17,4 @@ const isNotAuthenticated = (req, res, next) => {
 }
 
 
-export {  isAuthenticated, isNotAuthenticated } 
+export { isAuthenticated, isNotAuthenticated } 

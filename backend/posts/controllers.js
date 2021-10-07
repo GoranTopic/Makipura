@@ -1,4 +1,4 @@
-import postModel from "../models/postModel.js";
+import postModel from "./models.js";
 
 // user selected field to send back
 const selectFields = ['username', 'firstname', 'lastname', 'image'];

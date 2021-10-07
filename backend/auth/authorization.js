@@ -1,6 +1,5 @@
-import postModel from "../models/postModel.js";
+import postModel from "../posts/models.js";
 import { authorization_rules } from './config.js';
-
 
 const isAuthorized = (req, res, next) =>{
 		/* check is the logged in user is the owner of the post */
@@ -19,7 +18,6 @@ const isAuthorized = (req, res, next) =>{
 		else next();
 }
 
-
 const isUserOwner = (req, res, next) =>{
 		/* check is the logged user is the owner of the User data */
 		let filter = { username: req.params.username };
@@ -37,6 +35,5 @@ const isUserOwner = (req, res, next) =>{
 		});
 }
 
-
-export {  isAuthorized } 
+export { isAuthorized } 
 

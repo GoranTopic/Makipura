@@ -1,7 +1,7 @@
 /* this validator middleware checks the image to be posted, and read it to see 
- * if it is an actual image, 
- * it does not merely check the mime type as multer does.
- * */
+ * if it is an actual image file, 
+ * it does not merely check the mime type as multer does, 
+ * it reads into the file to check the magic number.  */
 import { allowedFileTypes } from '../config.js';
 import FileType from 'file-type';
 import  fs from 'fs';

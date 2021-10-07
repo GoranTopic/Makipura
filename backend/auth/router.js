@@ -1,12 +1,12 @@
 /* this router is has the routes off all autorization user related routes */
 import express from 'express' ;
-import passport from "../auth/passport.js";
-import { isAuthenticated, isNotAuthenticated } from "../auth/authentication.js";
-import { isAuthorized } from "../auth/authorization.js";
-import { signupUser, signinUser, signoutUser } from "../controllers/userControllers.js"
-import { userValidators, updateUserValidators, validate } from '../validation/formValidation.js';
-import { cleanProperties  } from '../utils/utils.js';
-import { multiFormHandler  } from '../parsers/multer.js';
+import passport from "./passport.js";
+import { isAuthenticated, isNotAuthenticated } from "./authentication.js";
+import { isAuthorized } from "./authorization.js";
+import { signupUser, signinUser, signoutUser } from "./controllers.js"
+import { userValidators, updateUserValidators, validate } from '../users/validators.js';
+import { cleanProperties } from '../users/utils.js';
+import { multiFormHandler } from '../multi-form-parser/multer.js';
 
 const authRouter = express.Router(); // get express router
 

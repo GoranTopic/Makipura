@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'; // import mongoose 
 import bcrypt from 'bcrypt';
-import ImageSchema from '../models/imageSchema.js';
+import ImageSchema from '../images/schema.js';
 import { loginTypes } from '../config.js';
 
 const { Schema } = mongoose; // get the Schema obj from mongoose

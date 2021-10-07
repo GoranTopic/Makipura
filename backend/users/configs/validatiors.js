@@ -13,7 +13,6 @@ let isCurrencyOptions = {
 		allow_space_after_digits: false,
 }
 
-
 let isStrongPasswordOptions = {
 		minLength: 8, 
 		minLowercase: 1, 
@@ -28,7 +27,6 @@ let isStrongPasswordOptions = {
 		pointsForContainingNumber: 10, 
 		pointsForContainingSymbol: 10,
 }
-
 
 let isEmailOptions = {  
 		allow_display_name: false,
@@ -53,7 +51,6 @@ let normalizeEmailOptions = {
 		icloud_lowercase: true,
 		icloud_remove_subaddress: true,
 }
-
 
 const phoneNumbersLocales = [ 'en-US', 'en-CA', 'en-GB', 'en-GG', 'en-GH', 'en-HK', 'en-MO', 'en-IE', 'en-IN', 'en-KE', 'en-MT', 'en-MU', 'en-NG', 'en-NZ', 'en-US' ];
 

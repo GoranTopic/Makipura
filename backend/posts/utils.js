@@ -1,5 +1,5 @@
 import userModel from "../users/models.js";
-import { allowedPropertiesInRequest, codeLength } from "./config.js";
+import { allowedPropertiesInRequest } from "./configs/utils.js";
 
 const allowedProperties = allowedPropertiesInRequest;
 /* this imported list must be of the form of:
@@ -16,7 +16,8 @@ const allowedProperties = allowedPropertiesInRequest;
  *		images: true,
  *		password: true,
  *		email: true,
- *} */
+ * } 
+ */
 
 const cleanProperties = (req, res, next) => {
 		/* clean the json of any unwanted properties */

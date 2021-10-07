@@ -11,11 +11,11 @@ import passport from "./auth/passport.js";
 
 // import routers
 import userRouter from "./users/router.js";
-import postRouter from "./routers/postRouter.js";
-import authRouter from "./routers/authRouter.js";
-import paymentRouter from "./routers/paymentRouter.js";
-import emailVerificationRouter from "./email-verification/routes.js";
-import passwordRecoveryRouter from "./password-recovery/routes.js";
+import postRouter from "./posts/router.js";
+import authRouter from "./auth/router.js";
+import paymentRouter from "./payment/router.js";
+import emailVerificationRouter from "./email-verification/router.js";
+import passwordRecoveryRouter from "./password-recovery/router.js";
 
 // run dot env to get enviroment variables
 dotenv.config();

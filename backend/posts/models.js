@@ -1,9 +1,8 @@
 import mongoose from 'mongoose'; // import mongoose 
-import ImageSchema from './imageSchema.js';
+import ImageSchema from '../images/schema.js';
 import { allowedCurrencies, allowedConditions } from '../config.js';
 
 const { Schema } = mongoose; // get the Schema obj from mongoose
-
 
 const PostSchema = new Schema({ // create new Schma object
 		title:{

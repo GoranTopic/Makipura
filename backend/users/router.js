@@ -1,12 +1,13 @@
 import express from 'express' ;
 import passport from "../auth/passport.js";
-import { isAuthenticated, isNotAuthenticated } from "../auth/authentication.js";
 import { isAuthorized } from "../auth/authorization.js";
-import { queryPostById, queryUserByUsername, queryUserByCookie } from "../queries/queries.js";
+import { isAuthenticated, isNotAuthenticated } from "../auth/authentication.js";
+import { queryPostById } from "../posts/queries.js";
+import { queryUserByUsername, queryUserByCookie } from "./queries.js";
+import { validate, userValidators, updateUserValidators } from './validators.js';
+import { cleanProperties } from './utils.js';
 import { sendUser, updateUser, deleteUser, 
-		sendAllUsers, searchUser  } from "../controllers/userControllers.js"
-import { userValidators, updateUserValidators, validate } from '../validation/formValidation.js';
-import { cleanProperties  } from '../utils/utils.js';
+		sendAllUsers, searchUser  } from "./controllers.js"
 
 const userRouter = express.Router(); // get express router
 
