@@ -1,4 +1,4 @@
-import postModel from "./models.js";
+import storeModel from "./models.js";
 
 // user selected field to send back
 const selectFields = ['username', 'firstname', 'lastname', 'image'];
@@ -14,30 +14,18 @@ const sherdUserObj = (user) => pick(user, selectFields);
 //sherd and array of objs
 const sherdArrUserObj = (users) =>  users.forEach(user => sherdUserObj(user));
 
-
-const sendHomePagePosts = (req, res, next) => {
-		postModel.find({}, (error, posts) => {
-				if(error) res.status(500).json({ error: e  }); // if there was an error
-				else{
-						if(!posts) res.status(404).json({ status: "posts not found" }); // if no post where found
-						else res.status(200).json(posts); // post where found
-				}
-		});
-}
-
-
-const sendPost = (req, res, next) => {
+const sendStore = (req, res, next) => {
 		let post = req.resource;
 		res.status(200).json(post);
 }
 
-const sendPosts = (req, res, next) => {
-		let posts = req.resource; // get posts list
+const sendStores = (req, res, next) => {
+		let store = req.resource; 
 		res.status(200).json(posts);
 }
 
-
-const createNewPost = (req, res, next) => {
+const createNewStore = (req, res, next) => {
+		// it get a user 
 		let userid  = req.user._id;
 		let images = req.files.image.map(image => { return { ...image, userid: userid }}); 
 		let new_post = { ...req.body, userid: userid, images: images  };
@@ -50,8 +38,8 @@ const createNewPost = (req, res, next) => {
 		});
 }
 
-const updatePost = (req, res, next) => {
-		let id = req.resource._id;
+const updateStore = (req, res, next) => {
+		let id = req.store._id;
 		postModel.findByIdAndUpdate(id, req.body, (error, post) => {
 				if(error) res.status(500).json({ error }); // if there was an error
 				else{
@@ -62,13 +50,13 @@ const updatePost = (req, res, next) => {
 }
 
 
-const deletePost = (req, res, next) => {
-		let id = req.resource._id;
-		postModel.findByIdAndDelete(id, (error) => 	{
+const deleteStore = (req, res, next) => {
+		let id = req.store._id;
+		storeModel.findByIdAndDelete(id, (error) => 	{
 				if(error) res.status(500).json({ error }); // if there was an error
 				else res.status(200).json({status: "success"}); // post where found
 		});
 }
 
-export {  sendHomePagePosts, sendPosts, sendPost, createNewPost, updatePost, deletePost };
+export { sendStore, sendStores, createNewStore, updateStore, deleteStore };
 

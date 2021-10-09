@@ -16,7 +16,8 @@ const allowedProperties = allowedPropertiesInRequest;
  *		images: true,
  *		password: true,
  *		email: true,
- *} */
+ * } 
+ */
 
 const cleanProperties = (req, res, next) => {
 		/* clean the json of any unwanted properties */
@@ -40,10 +41,4 @@ const haveSameData = function (obj1, obj2) {
 		return false;
 }
 
-const isVerified = (req, res, next) => {
-		/* this function checks if a user in req.user is verified */
-		return req.user.isVerified;
-}
-
-
-export { cleanProperties, isVerified };
+export { cleanProperties, haveSameData };

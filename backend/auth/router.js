@@ -59,16 +59,15 @@ authRouter.route('/google/callback')
 				function(req, res) {
 						console.log("Successfull login");
 						res.status(200).json({ status: 'success' });
-				  
 		});
 
 authRouter.route('/facebook/callback')
 		.get( 
 				passport.authenticate('facebook', { failureRedirect: '/login'  }),
 				function(req, res) {
+						console.log(req)
 						console.log("Successfull login");
 						res.status(200).json({ status: 'success' });
-				  
 		});
 
 

@@ -1,38 +1,40 @@
 import express from 'express' ;
 import { queryPostById, queryAllPost } from './queries.js';
-import { sendHomePagePosts, sendPosts, 
-		sendPost, createNewPost, updatePost, deletePost } from  './controllers.js';
-import { postValidators, updatePostValidators, validate } from './validators.js';
+import { sendStore, sendStores, createNewStore, 
+		updateStore, deleteStore } from  './controllers.js';
+import { storeValidators, updateStoreValidators, validate } from './validators.js';
 import { cleanProperties } from './utils.js';
-import limitByTime from './limitByTime.js';
 import { isAuthorized } from '../auth/authorization.js';
 import { isAuthenticated } from '../auth/authentication.js';
 import { validateImages } from '../images/validators.js';
 import { multiFormHandler } from '../multi-form-parser/multer.js';
+import { isVerified } from '../users/utils.js';
+import { queryUserByCookie } from '../users/queries.js';
 
-const postRouter = express.Router(); // get express router
+const storeRouter = express.Router(); // get express router
 
-postRouter.route('/')
+storeRouter.route('/')
 		.get(
 				sendHomePagePosts
 		)
 		.post( // make a post 
 				isAuthenticated, // check is user is signed in
-				limitByTime,
+				queryUserByCookie, // query the user
+				isVerified, // do not allow to create store if it is not verified
 				multiFormHandler, // handle the multiform input 
 				cleanProperties, // clean req.body properties
 				validateImages, // validate images
-				validate(postValidators), // validate text input
-				createNewPost, // create the post
+				validate(storeValidators), // validate text input
+				createNewStore, // create the post
 		);
 
-postRouter.route('/all/:page?')
+storeRouter.route('/all/:page?')
 		.get(
 				queryAllPost,
 				sendPosts
 		);
 
-postRouter.route('/id/:id/')
+storeRouter.route('/id/:id/')
 		.get(
 				queryPostById,
 				sendPost,
@@ -54,4 +56,4 @@ postRouter.route('/id/:id/')
 				deletePost, // do the deleting
 		);
 
-export default postRouter;
+export default storeRouter;

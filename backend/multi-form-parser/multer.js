@@ -51,6 +51,8 @@ const imageUploader = upload.fields([
 		{ name: 'image', maxCount: 6 },
 		{ name: 'profileImage', maxCount: 1 },
 		{ name: 'backgroundImage', maxCount: 1 },
+		{ name: 'storeProfileImage', maxCount: 1 },
+		{ name: 'storeBackgroundImage', maxCount: 1 },
 ]);
 
 const multiFormHandler = (req, res, next) => {

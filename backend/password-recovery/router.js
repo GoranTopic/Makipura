@@ -1,7 +1,7 @@
 import express from 'express' ;
 import { isNotAuthenticated } from "../auth/authentication.js";
+import { queryUserByToken, queryUserByEmail } from '../users/queries.js';
 import { validateToken } from './validators.js';
-import { queryUserByToken, queryUserByEmail } from './queries.js';
 import { createToken, findToken, emailExists, sendEmail, deleteToken, updatePassword } from "./controllers.js";
 
 const passwordRecoveryRouter = express.Router(); // get express router

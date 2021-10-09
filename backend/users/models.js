@@ -84,7 +84,6 @@ const UserSchema = new Schema({ // create new Schma object
 		},
 		profileImage: ImageSchema,
 		backgroundImage: ImageSchema,
-
 });
 
 

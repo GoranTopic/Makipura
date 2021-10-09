@@ -11,7 +11,7 @@ const env = process.env;
 const createToken = (req, res, next) => {
 		/* given the user object in the req. create a token for the user in the db
 		 * if the gve token for a fiven user already exists, then update it the token */
-		let userid = req.user._id;
+		let userid = req.resource._id;
 		let filter = { userid: userid }
 		let update = { userid: userid }
 		// set options so that if token if not found it creates it with defaults
@@ -74,7 +74,7 @@ const sendEmail = (req, res, next) => {
 		 * Send email with given token in req. */
 		// add the exposed endpoint in a config file */
 		let token = req.token;
-		let recipentMail = req.user.email;
+		let recipentMail = req.resource.email;
 		let sender = mail_sender;
 		let mailerOptions ={ // define options for the mailer
 				from: sender,
@@ -108,7 +108,7 @@ const updatePassword = (req, res, next) => {
 		/* this function takes a password passed, 
 		 * and updates the user, with the user. */
 		let password = req.password;
-		let userid = req.user._id;
+		let userid = req.resource._id;
 		userModel.findByIdAndUpdate(userid, { password }, (error, response) => {
 				if(error) res.status(500).json({
 						status: "failure", 

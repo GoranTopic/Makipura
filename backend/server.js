@@ -12,6 +12,7 @@ import passport from "./auth/passport.js";
 // import routers
 import userRouter from "./users/router.js";
 import postRouter from "./posts/router.js";
+import storeRouter from "./stores/router.js";
 import authRouter from "./auth/router.js";
 import paymentRouter from "./payment/router.js";
 import emailVerificationRouter from "./email-verification/router.js";
