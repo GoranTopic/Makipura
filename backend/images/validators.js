@@ -12,7 +12,9 @@ let allowedRegex = new RegExp(allowedFileTypes.join("|"), 'gi');
 // but im too tired and will not do it tonight
 // I must find a way to do Promise.all() with every 
 
-const validateImages = (req, res, next) => 
+const validateImages = (req, res, next) => {  
+		if(!req.files.image) // must have at least one image to validate
+				return next();
 		Promise.all( 
 				req.files.image.map( async image => { 
 						let type =  await FileType.fromFile(image.path);
@@ -27,31 +29,40 @@ const validateImages = (req, res, next) =>
 								return { ...image, supported: false, type: type }
 						}
 				})
-		)
-				.then(results => { 
-						let allpassed = results.every(result => result.supported);
-						if(allpassed) next();
-						else {  
-								results.forEach(image => // delete images
-										fs.unlink(image.path, error => {
-												if(error) 
-														res.status(500) 
-																.json({ 
-																		status: 'failure', 
-																		msg: 'could not delete file' 
-																});
-										}
-										));	
-								res.status(400) 
-										.json({ 
-												status: 'failure', 
-												msg: 'file type not supported' 
-										});
-						}
-				})
+		).then(results => { 
+				let allpassed = results.every(result => result.supported);
+				if(allpassed) next();
+				else {  
+						results.forEach(image => // delete images
+								fs.unlink(image.path, error => {
+										if(error) 
+												res.status(500) 
+														.json({ 
+																status: 'failure', 
+																msg: 'could not delete file' 
+														});
+								}
+								));	
+						res.status(400) 
+								.json({ 
+										status: 'failure', 
+										msg: 'file type not supported' 
+								});
+				}
+		})
 				.catch(error => {
 						console.log(error);
 				})
+}
 
-export { validateImages }
+const mustHaveImages = (req, res, next) => {
+		if(req.files.image && req.files.image.length > 0) next();
+		else // if it does not have images
+				res.status(400).json({
+						status: 'failure', 
+						msg:'must contain at least one image'
+				});
+};
+
+export { validateImages, mustHaveImages }
 

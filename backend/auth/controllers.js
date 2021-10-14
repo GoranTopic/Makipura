@@ -1,3 +1,4 @@
+import userModel from "../users/models.js";
 
 const signupUser = (req, res, next) => {
 		/* create user in the db */

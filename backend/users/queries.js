@@ -6,6 +6,7 @@
  * save the logged in user in req.user, and there is often 
  * the need to compare the two of them.
  * this is so that we don't have to query the database twice */
+import userModel from './models.js';
 
 
 const queryUserByUsername = (req, res, next) => {

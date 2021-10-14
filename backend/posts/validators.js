@@ -76,12 +76,17 @@ const validate = validations => async (req, res, next) => {
 		await Promise.all( validations.map( validation => validation.run(req) ) );
 		const errors = validationResult(req);
 		if (errors.isEmpty()) {
-				console.log("passed form validation")
+				//console.log("passed form validation")
 				return next();
 		}else{
-				console.log("errors in form validation");
+				//console.log("errors in form validation");
 				res.status(400).json({ errors: errors.array() });
 		} 
 };
 
+
+
+
+
 export { validate, postValidators, updatePostValidators }
+

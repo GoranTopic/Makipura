@@ -3,6 +3,7 @@ const allowedPropertiesInRequest = {
 		lastname: true,
 		firstname: true,
 		condition: true,
+		storeid: true,
 		mobileNumber: true,
 		description: true,
 		title: true,

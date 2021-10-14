@@ -32,6 +32,11 @@ const PostSchema = new Schema({ // create new Schma object
 				ref: 'User',
 				required: true,
 		},
+		storeid: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Store',
+				required: false,
+		},
 		datePosted: {
 				type: Date,
 				default: new Date(),

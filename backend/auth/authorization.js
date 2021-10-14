@@ -1,5 +1,5 @@
 import postModel from "../posts/models.js";
-import { authorization_rules } from './config.js';
+import { authorization_rules } from './rules.js';
 
 const isAuthorized = (req, res, next) =>{
 		/* check is the logged in user is the owner of the post */

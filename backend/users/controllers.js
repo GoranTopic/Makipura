@@ -79,5 +79,5 @@ const searchUser = async (req, res, next) => {
 
 
 
-export  { sendUser, updateUser, deleteUser, sendAllUsers, searchUser };
+export { sendUser, updateUser, deleteUser, sendAllUsers, searchUser };
 

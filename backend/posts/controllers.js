@@ -39,7 +39,8 @@ const sendPosts = (req, res, next) => {
 
 const createNewPost = (req, res, next) => {
 		let userid  = req.user._id;
-		let images = req.files.image.map(image => { return { ...image, userid: userid }}); 
+		// tag image
+		let images = req.files.image.map(image => { return { ...image, userid: userid }});
 		let new_post = { ...req.body, userid: userid, images: images  };
 		postModel.create(new_post, (error, post) => {
 				if(error) res.status(500).json({ error  }); // if there was an error
@@ -52,7 +53,12 @@ const createNewPost = (req, res, next) => {
 
 const updatePost = (req, res, next) => {
 		let id = req.resource._id;
-		postModel.findByIdAndUpdate(id, req.body, (error, post) => {
+		let userid = req.resource.userid;
+		let images = 	(req.files.image)? // if there is images
+				req.files.image.map(image => { return { ...image, userid: userid }}) : // tag image
+				req.resource.images; // dont change image if not images passed
+		let new_post = { ...req.body, userid: userid, images: images  };
+		postModel.findByIdAndUpdate(id, new_post, (error, post) => {
 				if(error) res.status(500).json({ error }); // if there was an error
 				else{
 						if(!post) res.status(404).json({ status: "posts not found" }); // if no post where found
@@ -60,7 +66,6 @@ const updatePost = (req, res, next) => {
 				}
 		});
 }
-
 
 const deletePost = (req, res, next) => {
 		let id = req.resource._id;

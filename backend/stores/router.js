@@ -1,9 +1,10 @@
 import express from 'express' ;
-import { queryPostById, queryAllPost } from './queries.js';
-import { sendStore, sendStores, createNewStore, 
+import { queryStoreById, queryAllStores } from './queries.js';
+import { sendAllStores, sendStore, sendStores, createNewStore, 
 		updateStore, deleteStore } from  './controllers.js';
 import { storeValidators, updateStoreValidators, validate } from './validators.js';
 import { cleanProperties } from './utils.js';
+import limitByTime  from './limitByTime.js';
 import { isAuthorized } from '../auth/authorization.js';
 import { isAuthenticated } from '../auth/authentication.js';
 import { validateImages } from '../images/validators.js';
@@ -15,12 +16,13 @@ const storeRouter = express.Router(); // get express router
 
 storeRouter.route('/')
 		.get(
-				sendHomePagePosts
+				sendAllStores,
 		)
 		.post( // make a post 
 				isAuthenticated, // check is user is signed in
 				queryUserByCookie, // query the user
 				isVerified, // do not allow to create store if it is not verified
+				limitByTime,  // limit the amount to posts per time
 				multiFormHandler, // handle the multiform input 
 				cleanProperties, // clean req.body properties
 				validateImages, // validate images
@@ -30,30 +32,30 @@ storeRouter.route('/')
 
 storeRouter.route('/all/:page?')
 		.get(
-				queryAllPost,
-				sendPosts
+				queryAllStores,
+				sendStores
 		);
 
 storeRouter.route('/id/:id/')
 		.get(
-				queryPostById,
-				sendPost,
+				queryStoreById,
+				sendStore,
 		)
 		.put(
 				isAuthenticated, // has user signed in
 				multiFormHandler, // handle the multiform input 
 				cleanProperties,
-				queryPostById,
+				queryStoreById,
 				isAuthorized,
 				validateImages, // validate images
-				validate(updatePostValidators), // run validators 
-				updatePost
+				validate(updateStoreValidators), // run validators 
+				updateStore
 		)
 		.delete(
 				isAuthenticated, // check if user is logged in
-				queryPostById, // check post queried
+				queryStoreById, // check post queried
 				isAuthorized, // is authorized to delete post ? 
-				deletePost, // do the deleting
+				deleteStore, // do the deleting
 		);
 
 export default storeRouter;

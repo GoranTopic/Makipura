@@ -4,10 +4,10 @@ import { sendHomePagePosts, sendPosts,
 		sendPost, createNewPost, updatePost, deletePost } from  './controllers.js';
 import { postValidators, updatePostValidators, validate } from './validators.js';
 import { cleanProperties } from './utils.js';
-import limitByTime from './limitByTime.js';
+import { limitByTime } from './limiters.js';
 import { isAuthorized } from '../auth/authorization.js';
 import { isAuthenticated } from '../auth/authentication.js';
-import { validateImages } from '../images/validators.js';
+import { validateImages, mustHaveImages } from '../images/validators.js';
 import { multiFormHandler } from '../multi-form-parser/multer.js';
 
 const postRouter = express.Router(); // get express router
@@ -18,9 +18,10 @@ postRouter.route('/')
 		)
 		.post( // make a post 
 				isAuthenticated, // check is user is signed in
-				limitByTime,
+				limitByTime, // limit by time
 				multiFormHandler, // handle the multiform input 
 				cleanProperties, // clean req.body properties
+				mustHaveImages, // create post must have an image
 				validateImages, // validate images
 				validate(postValidators), // validate text input
 				createNewPost, // create the post

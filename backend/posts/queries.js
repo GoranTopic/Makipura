@@ -13,10 +13,11 @@ const queryPostById = (req, res, next)  =>{
 		 * and store it in resorse */
 		let id = req.params.id;
 		postModel.findById(id)
-				.populate('userid', '-admin -__v', )
+				.select('-__v')
+				//.populate('userid', '-admin -__v -_id -loginType -backgroundImage ', )
 				.exec((error, post) => {
 						if(error) res.status(500).json({error});
-						else if(!post) res.status(404).json( { status: "faliure", msg: "post not found" });
+						else if(!post) res.status(404).json( { status: "failure", msg: "post not found" });
 						else{
 								req.resourceType = "post"; 
 								req.resource = post;

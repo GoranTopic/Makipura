@@ -4,40 +4,40 @@
  * down the line: req.resource = query
  * this is so that we don't have to query the database twice */
 
-import postModel from "./models.js"; 
+import storeModel from "./models.js"; 
 import userModel from "../users/models.js";
 
 
-const queryPostById = (req, res, next)  =>{
+const queryStoreById = (req, res, next)  =>{
 		/* given an id, takeit from the db
 		 * and store it in resorse */
 		let id = req.params.id;
 		postModel.findById(id)
 				.populate('userid', '-admin -__v', )
-				.exec((error, post) => {
+				.exec((error, store) => {
 						if(error) res.status(500).json({error});
 						else if(!post) res.status(404).json( { status: "faliure", msg: "post not found" });
 						else{
-								req.resourceType = "post"; 
-								req.resource = post;
+								req.resourceType = "store"; 
+								req.store = store;
 								next();
 						}
 				});
 }
 
-const queryAllPost = (req, res, next)  =>{
+const queryAllStores = (req, res, next)  =>{
 		/* query all the post from db, in production,
 		 * delete this and only use pagination */
-		postModel.find({})
+		storeModel.find({})
 				.populate('userid')
-				.exec((error, posts) => {
+				.exec((error, store) => {
 						if(error) res.status(500);
 						else{
-								req.resourceType = "posts"; 
-								req.resource = posts;
+								req.resourceType = "store"; 
+								req.store = store;
 								next();
 						}
 				});
 }
 
-export { queryPostById, queryAllPost, }
+export { queryStoreById, queryAllStores, }
