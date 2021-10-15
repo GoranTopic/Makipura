@@ -84,7 +84,27 @@ const httpsServer = https.createServer(credentials, app);
 // initialize socket io 
 const io = new Server(httpsServer);
 // save the socket io object to the route
-app.set('socketio', io);
+//app.set('socketio', io);
+
+io.use( (socket, next) => { console.log("this middleware ran"); next() } );
+io.emit('hi!');
+
+io.on("connection", socket => { 
+		console.log("there was a connection");
+		socket.emit("chat-message",  "helloword");
+		//const users = [];  
+		//for (let [id, socket] of io.of("/").sockets) {    
+			//	users.push({      
+				//		userID: id,      
+				//		username: socket.username,    
+				//});  
+		//}  
+		//socket.emit("users", users);
+});
+
+
+
+
 
 // inizilized password autheticifcation middleware
 app.use(passport.initialize());
@@ -102,7 +122,7 @@ app.use('/auth', authRouter);
 // define routes for payment 
 app.use('/payment', paymentRouter);
 // route for message 
-app.use('/messages', messagesRouter);
+//app.use('/messages', messagesRouter);
 // recover password
 app.use('/recovery', passwordRecoveryRouter);
 // emai verification 
