@@ -42,6 +42,19 @@ io.on("connection", (socket) => {
   socket.emit("users", users);
 });
 
+
+io.on("d", (socket) => {
+  console.log('new user connected');
+  const users = [];
+  for (let [id, socket] of io.of("/").sockets) {
+    users.push({
+      userID: id,
+      username: socket.username,
+    });
+  }
+  socket.emit("users", users);
+});
+
 io.on("private message", ({ content, to }) => {
 		socket.to(to).emit("private message", { 
 				content: content,
@@ -52,7 +65,6 @@ io.on("private message", ({ content, to }) => {
 io.on("get users", (input) =>{  
 		console.log(" get user server ran");
 		console.log(input);
-	
 })
 
 server.listen(3000, () => console.log('listening on http://localhost:3000'));
