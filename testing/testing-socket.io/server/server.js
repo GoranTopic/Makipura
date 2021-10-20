@@ -59,7 +59,7 @@ const getUsersRegister = user_socket =>
 
 const sendMessageRegister = socket => {
 		socket.on("message", message => {  
-				const to = message[0].to.userID;
+				let to = message[0].to.userID;
 				console.log("server sending message to: " + to);
 				console.log(to);
 				socket.to(to).emit('message', {
