@@ -7,6 +7,7 @@ import cors from "cors";
 import path from 'path';
 import { Server } from 'socket.io';
 import https from 'https';
+import { createServer } from 'http';
 import fs from 'fs';
 
 // import configured passport 
@@ -79,10 +80,10 @@ const credentials = {
 		cert: fs.readFileSync('cert.pem')
 };
 // create https server
-const httpsServer = https.createServer(credentials, app);
+const httpServer = createServer(credentials, app);
 
 // initialize socket io 
-const io = new Server(httpsServer);
+const io = new Server(httpServer);
 // save the socket io object to the route
 //app.set('socketio', io);
 
@@ -132,7 +133,7 @@ app.use('/email-verification', passwordRecoveryRouter);
 // define a global route thath catches any get requests
 app.use('*', (req,res) => { res.status(404).json({error: "not found"}); })
 
-httpsServer.listen(PORT, console.log('https server is running on port: ' + PORT));
+httpServer.listen(PORT, console.log('http server is running on port: ' + PORT));
 
 export default app;
 
