@@ -1,4 +1,4 @@
-.env
-cert.pem
-key.pem
+backend/.env
+backend/cert.pem
+backend/key.pem
 !.gitignore
