@@ -10,10 +10,6 @@ const Tab = createBottomTabNavigator();
 
 const HomeNavigator = props => {
 		/* this stack dislays the home for a logged in user */
-		const context = React.useContext(Context);
-		console.log("context from HomeNavigator:")
-		console.log(context);
-
 
 		const HomeTabs = () => <Tab.Navigator>
 				<Tab.Screen 

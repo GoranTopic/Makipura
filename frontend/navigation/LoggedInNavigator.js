@@ -9,7 +9,6 @@ import Context from '../state/context.js';
 
 const Drawer = createDrawerNavigator();
 
-
 const LoggedInNavigator = props => {
 		/* this navigator defines the routes for a logged in user, 
 		 * it provide the user logged in context information */
@@ -23,7 +22,6 @@ const LoggedInNavigator = props => {
 						{ jsonp: false }
 				)
 		);
-
 
 		useEffect(() => { 
 				socket.onAny((event) => {
@@ -39,13 +37,7 @@ const LoggedInNavigator = props => {
 				});
 		} , [])
 
-
-
-		const LoggedInDrawer = () => {  
-				const context = React.useContext(Context)
-				console.log("context from LoggedInDrawer:")
-				console.log(context);
-				return <>
+		const LoggedInDrawer = () => <>
 						<Drawer.Navigator 
 								initialRouteName="Home">
 								<Drawer.Screen 
@@ -56,11 +48,8 @@ const LoggedInNavigator = props => {
 										component={NotificationsScreen} />
 						</Drawer.Navigator>
 				</>
-		}
 
-				return (
-						<LoggedInDrawer/>
-				);
+				return <LoggedInDrawer/>
 }
  
 export default connect(mapStateToProps, mapDispatchToProps)(LoggedInNavigator);

@@ -15,8 +15,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import AppNavigator from './navigation/AppNavigator.js';
-// import context
-import Context from './state/context.js';
 // import reducer
 import { Provider } from 'react-redux';
 import store from './state/store.js';
@@ -27,6 +25,7 @@ const Drawer = createDrawerNavigator();
 
 export default function App() {
 
+		/*
 		const [socket, setSocket] = useState( io(
 				"http://10.0.0.3:3000", 
 				//'http://192.168.1.219:3000',
@@ -124,13 +123,13 @@ export default function App() {
 						</Tab.Navigator>
 				</>
 
-
 		const loggedInDrawer = <Drawer.Navigator initialRouteName="loggedInStack">
 				<Drawer.Screen 
 						name="loggedInStack" 
 						component={loggedInStack} />
 				<Drawer.Screen name="Notifications" component={NotificationsScreen} />
 		</Drawer.Navigator>
+		*/
 
 				return (
 						<Provider store={store}>

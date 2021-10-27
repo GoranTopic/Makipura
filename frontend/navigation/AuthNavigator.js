@@ -6,7 +6,6 @@ import SignupScreen from '../screens/SignupScreen.js';
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = props => {  
-
 		return <>
 				<Stack.Navigator initialRouteName="Login">
 						<Stack.Screen 

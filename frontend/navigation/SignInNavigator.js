@@ -9,7 +9,6 @@ const Tab = createBottomTabNavigator();
 
 const SignInNavigator = props => {
 
-
 		const signupTabs = <>
 				<Tab.Navigator initialRouteName="Home" >
 						<Tab.Screen 

@@ -8,11 +8,7 @@ import Context from '../state/context.js';
 
 const Stack = createNativeStackNavigator();
 
-
 const ChatNavigator = props => {
-		const context = React.useContext(Context)
-		console.log("Ccontext from ChatNavigator:")
-		console.log(context)
 
 		const ChatStack = <>
 				<Stack.Navigator 

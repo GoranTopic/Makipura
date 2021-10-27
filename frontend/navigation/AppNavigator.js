@@ -10,8 +10,7 @@ const AppNavigator = props =>  {
 		console.log(props);
 		return <>
 				<NavigationContainer>     
-						{ 
-								//props.state.isLoggedIn? 
+						{ //props.state.isLoggedIn? 
 								true?
 								<LoggedInNavigator/> :
 								<SignInNavigator/> }
