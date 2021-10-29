@@ -8,8 +8,8 @@ import ChatScreen from '../screens/ChatScreen.js';
 const Stack = createNativeStackNavigator();
 
 const ChatNavigator = props => {
-		console.log("print socket from ChatNavigator:");
-		console.log(props);
+		//console.log("print socket from ChatNavigator:");
+		//console.log(props);
 		const { user } = props.state;
 
 		const ChatStack = <>

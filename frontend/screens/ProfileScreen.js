@@ -7,7 +7,7 @@ export default function SettingScreen({ navigation }){
 
 		return <>
 				<View style={styles.container}>
-						<Text>Setting Screen</Text>
+						<Text>Profile Screen</Text>
 				</View>
 		</>
 }

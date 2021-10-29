@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { connect } from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js';
 import React, { useEffect, useState, useCallback } from 'react';
 import ChatView from "../components/ChatView.js";
 
-export default function ChatScreen({ socket, route, navigate }){
-
+function ChatScreen({ state, route, navigate }){
+		const { socket, cookie }  = state.user;
 		const { contact } = route.params;
 		
 		return <View style={styles.container}>
@@ -13,11 +15,12 @@ export default function ChatScreen({ socket, route, navigate }){
 		</View>
 }
 
+export default connect(mapStateToProps, mapDispatchToProps)(ChatScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
   },
 });

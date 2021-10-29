@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 const RenderContact = ({ contact, navigation }) => 
 		<TouchableOpacity
-				onPress={ () => navigation.navigate('Chat', { contact }) }>
+				onPress={ () => navigation.navigate('ChatScreen', { contact }) }>
 				<Text>{contact.userID}</Text>
 		</TouchableOpacity>
 
@@ -24,6 +24,7 @@ function ChatListScreen({ socket, navigation }){
 
 		return <View style={styles.container}>
 				<StatusBar style="auto" />
+
 				<Text>User: {socket.id}</Text>
 				<Text>Contacts List screen</Text>
 				{ contacts.map( (contact, index) => 

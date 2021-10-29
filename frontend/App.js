@@ -20,8 +20,8 @@ export default function App() {
 						{ jsonp: false }
 				)
 		);
-		console.log("printing from App:");
-		console.log(store)
+		//console.log("printing from App:");
+		//console.log(store)
 
 		/*
 		if(socket){
