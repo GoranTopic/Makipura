@@ -5,7 +5,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js';
 import HomeNavigator from './HomeNavigator.js'
 import NotificationsScreen from '../screens/NotificationsScreen.js';
-import Context from '../state/context.js';
 
 const Drawer = createDrawerNavigator();
 
@@ -15,28 +14,6 @@ const LoggedInNavigator = props => {
 		console.log("prining props from LoggedInNavigator:");
 		console.log(props);
 		
-		const [socket, setSocket] = useState( 
-				io(
-						"http://10.0.0.3:3000", 
-						//'http://192.168.1.219:3000',
-						{ jsonp: false }
-				)
-		);
-
-		useEffect(() => { 
-				socket.onAny((event) => {
-						console.log(`ANY ${event}`);
-				});
-				socket.on("connect_error", () => {  
-						//console.log("connection error");
-						setTimeout(() => {    
-								socket.connect();  
-						}, 1000);});
-				socket.on("disconnect", (reason) => {
-						console.log("disconected");
-				});
-		} , [])
-
 		const LoggedInDrawer = () => <>
 						<Drawer.Navigator 
 								initialRouteName="Home">

@@ -1,3 +1,5 @@
+import { setSocket, setCookie, setState } from './actions.js'
+
 const mapStateToProps = state => {
     return {
         state: state,
@@ -5,17 +7,20 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-	return{
-        increaseTheValue : () => {
-            //dispatch(increase());
-						return null
+	return {
+         setSocket: socket => {
+            dispatch(setSocket(socket));
         },
 
-        decreaseTheValue : () => {
-            //dispatch(decrease());
-						return null
-        }
+        setCookie: cookie => {
+            dispatch(setCookie(cookie));
+        },
+
+        setState: state => {
+            dispatch(setState(state));
+        },
     }
 }
+
   
 export { mapStateToProps, mapDispatchToProps }

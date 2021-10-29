@@ -7,33 +7,39 @@ import ChatNavigator from './ChatNavigator.js';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// render this stack if user is logged In
+const HomeStack = () => <>
+		<Stack.Navigator>
+				<Stack.Screen name="HomeScreen"
+						component={HomeScreen}
+						options={{ headerShown: false }} />  
+		</Stack.Navigator>  
+</>
+
+
 
 const HomeNavigator = props => {
 		/* this stack dislays the home for a logged in user */
 
-		const HomeTabs = () => <Tab.Navigator>
-				<Tab.Screen 
-						name="Home"
-						//component={HomeScreen}/>  
-						options={{ headerShown: false }}>
-						{ props => <HomeScreen {...props} /> }
-				</Tab.Screen>
-				<Tab.Screen
-						name="Contacts"
-						options={{ headerShown: false }}
-						component={ChatNavigator}/>  
-		</Tab.Navigator>
-				
-				// render this stack if user is logged In
-				const HomeStack = <>
-						<Stack.Navigator>
-								<Stack.Screen name="HomeTabs"
-										component={HomeTabs}
-										options={{ headerShown: false }} />  
-						</Stack.Navigator>  
-				</>
 
-				return HomeStack;
+
+		const HomeTabs = <>
+				<Tab.Navigator>
+						<Tab.Screen 
+								name="HomeStack"
+								//component={HomeScreen}/>  
+								options={{ headerShown: false }}>
+								{ props => <HomeStack {...props} /> }
+						</Tab.Screen>
+						<Tab.Screen
+								name="Contacts"
+								options={{ headerShown: false }} >
+								{ props => <ChatNavigator {...props} /> }
+						</Tab.Screen>
+				</Tab.Navigator>
+		</>
+				
+				return HomeTabs;
 }
 
 export default HomeNavigator;

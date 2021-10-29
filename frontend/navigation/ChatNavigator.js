@@ -4,11 +4,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js';
 import ChatListScreen from '../screens/ChatListScreen';
 import ChatScreen from '../screens/ChatScreen.js';
-import Context from '../state/context.js';
 
 const Stack = createNativeStackNavigator();
 
 const ChatNavigator = props => {
+		console.log("print socket from ChatNavigator:");
+		console.log(props);
+		const { user } = props.state;
 
 		const ChatStack = <>
 				<Stack.Navigator 
@@ -16,18 +18,19 @@ const ChatNavigator = props => {
 						<Stack.Screen
 								options={{ headerShown: false }}
 								name="ChatList">  
-								{ props => <ChatListScreen {...props} socket={socket} /> }
+								{ props => <ChatListScreen {...props} socket={user.socket} /> }
 						</Stack.Screen>
 						<Stack.Screen 
 								name="Chat"
-								//options={({ route }) => ({ title: route.params.contact.userID })} 
+		//options={({ route }) => ({ title: route.params.contact.userID })} 
 								options={{ headerShown: false }} >  
-								{ props => <ChatScreen {...props} socket={socket} /> }
+								{ props => <ChatScreen {...props} socket={user.socket} /> }
 						</Stack.Screen>
 				</Stack.Navigator>
 		</>
-		
-				return ChatStack;
+
+
+		return ChatStack;
 }
 
   

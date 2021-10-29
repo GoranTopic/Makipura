@@ -8,7 +8,6 @@ const RenderContact = ({ contact, navigation }) =>
 				<Text>{contact.userID}</Text>
 		</TouchableOpacity>
 
-
 function ChatListScreen({ socket, navigation }){  
 		const [ contacts, setContacts ] = useState([]);
 
@@ -21,7 +20,6 @@ function ChatListScreen({ socket, navigation }){
 				socket.on('new user', user => 
 						setContacts(previousContacts => [ ...previousContacts, user ])
 				)
-
 		}, []);
 
 		return <View style={styles.container}>
@@ -35,6 +33,7 @@ function ChatListScreen({ socket, navigation }){
 						contact={contact}  />
 				) }
 		</View>
+
 }
 
 export default ChatListScreen;

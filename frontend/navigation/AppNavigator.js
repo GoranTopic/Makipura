@@ -8,10 +8,11 @@ import SignInNavigator from './SignInNavigator';
 const AppNavigator = props =>  {  	
 		console.log("getting props state from AppNavigator: ");
 		console.log(props);
+		const { user } = props.state;
 		return <>
 				<NavigationContainer>     
 						{ //props.state.isLoggedIn? 
-								true?
+								user.isSignedIn?
 								<LoggedInNavigator/> :
 								<SignInNavigator/> }
 				</NavigationContainer>

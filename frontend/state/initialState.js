@@ -1,7 +1,9 @@
+import initSocket from '../inicializers/socket.js';
+
 const initialState = {
 		username: null,
-		socket: null,
-		isSignedIn: false,
+		socket: initSocket(),
+		isSignedIn: true,
 		cookie: null,
 };
 
