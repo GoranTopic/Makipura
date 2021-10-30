@@ -2,8 +2,9 @@ import io from "socket.io-client/dist/socket.io";
 
 export default function initSocket() {
 		const socket = io( 
-				"http://10.0.0.3:3000", 
-				//'http://192.168.1.219:3000',
+				//"http://10.0.0.3:3000", // home
+				//'http://192.168.1.219:3000', // celiant
+				'http://192.168.1.193:5000', // gf place
 				{ jsonp: false }
 		);
 

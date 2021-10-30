@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js'
 import LoggedInRootStack from './LoggedInRootStack.js';
-import SignInNavigator from './SignInNavigator';
+import SignInRootStack from './SignInRootStack.js';
 
 const AppNavigator = props =>  {  	
 		//console.log("getting props state from AppNavigator: ");
@@ -14,7 +14,7 @@ const AppNavigator = props =>  {
 						{ //props.state.isLoggedIn? 
 								user.isSignedIn?
 								<LoggedInRootStack/> :
-								<SignInNavigator/> }
+								<SignInRootStack/> }
 				</NavigationContainer>
 		</>
 }

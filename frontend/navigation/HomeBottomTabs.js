@@ -5,7 +5,6 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js';
 import HomeScreen from '../screens/HomeScreen.js';
-import ChatNavigator from './ChatNavigator.js';
 import ChatListScreen from '../screens/ChatListScreen';
 
 const Tab = createMaterialTopTabNavigator();

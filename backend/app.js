@@ -13,6 +13,9 @@ import fs from 'fs';
 // import configured passport 
 import passport from "./auth/passport.js";
 
+// import socket io inicilizer
+import initializeSocket from './messages/initializeSocket.js';
+
 // import routers
 import userRouter from "./users/router.js";
 import postRouter from "./posts/router.js";
@@ -83,29 +86,15 @@ const credentials = {
 const httpServer = createServer(credentials, app);
 
 // initialize socket io 
-const io = new Server(httpServer);
-// save the socket io object to the route
-//app.set('socketio', io);
+const io = new Server(httpServer, { 
+		cors: {
+				origin: "http://localhost:8080", 
+		}, 
+} );
 
-io.use( (socket, next) => { console.log("this middleware ran"); next() } );
-io.emit('hi!');
-
-io.on("connection", socket => { 
-		console.log("there was a connection");
-		socket.emit("chat-message",  "helloword");
-		//const users = [];  
-		//for (let [id, socket] of io.of("/").sockets) {    
-			//	users.push({      
-				//		userID: id,      
-				//		username: socket.username,    
-				//});  
-		//}  
-		//socket.emit("users", users);
-});
-
-
-
-
+// register all of the events in the socket io 
+// that are necesary for messaging
+initializeSocket(io);
 
 // inizilized password autheticifcation middleware
 app.use(passport.initialize());
@@ -133,7 +122,9 @@ app.use('/email-verification', passwordRecoveryRouter);
 // define a global route thath catches any get requests
 app.use('*', (req,res) => { res.status(404).json({error: "not found"}); })
 
-httpServer.listen(PORT, console.log('http server is running on port: ' + PORT));
+httpServer.listen(PORT, 
+		console.log('http server listen on https://localhost:' + PORT)
+);
 
 export default app;
 

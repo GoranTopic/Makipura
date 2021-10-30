@@ -1,9 +1,9 @@
-import initSocket from '../inicializers/socket.js';
+import inicialize from '../inicializers/userInicializer.js'; 
 
-const initialState = {
+const initialState = inicialize() || {
 		username: null,
-		socket: initSocket(),
-		isSignedIn: true,
+		socket: null,
+		isSignedIn: null,
 		cookie: null,
 };
 

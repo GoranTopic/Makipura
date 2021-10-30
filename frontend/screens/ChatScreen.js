@@ -6,8 +6,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import ChatView from "../components/ChatView.js";
 
 function ChatScreen({ state, route, navigate }){
-		const { socket, cookie }  = state.user;
 		const { contact } = route.params;
+		const { socket, cookie }  = state.user;
 		
 		return <View style={styles.container}>
 				<StatusBar style="auto"/>

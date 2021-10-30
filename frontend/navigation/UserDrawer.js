@@ -9,6 +9,7 @@ import NotificationsScreen from '../screens/NotificationsScreen.js';
 import ChatScreen from '../screens/ChatScreen.js';
 import ProfileScreen from '../screens/ProfileScreen.js';
 import SettingsScreen from '../screens/SettingScreen.js';
+import AboutScreen from '../screens/AboutScreen.js';
 
 const Drawer = createDrawerNavigator();
 
@@ -24,19 +25,35 @@ const UserDrawer = () => (
 						<Drawer.Screen 
 								name="Notifications" 
 								component={NotificationsScreen}
+								options={{ title: 'Makipura',
+										drawerLabel: 'Notifications',
+								}}
 						/>
 						<Drawer.Screen 
 								name="Settings" 
 								component={SettingsScreen}
+								options={{ title: 'Makipura',
+										drawerLabel: 'Settings',
+								}}
 						/>
 						<Drawer.Screen 
 								name="Profile" 
 								component={ProfileScreen}
+								options={{ title: 'Makipura',
+										drawerLabel: 'Profile',
+								}}
+						/>
+						<Drawer.Screen 
+								name="About" 
+								component={AboutScreen}
+								options={{ title: 'Makipura',
+										drawerLabel: 'About',
+								}}
 						/>
 				</Drawer.Navigator>
 		</>
 )
 
- 
+
 export default connect(mapStateToProps, mapDispatchToProps)(UserDrawer);
 

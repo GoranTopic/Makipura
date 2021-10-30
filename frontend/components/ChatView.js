@@ -17,7 +17,6 @@ export default function ChatView({ socket, contact }){
 						setMessages(previousMessages => 
 								GiftedChat.append(previousMessages, message))
 				});
-				return 
 		}, []);
 
 		const onSend = useCallback((messages = []) => {
