@@ -37,11 +37,11 @@ const SECRET = ENV.SECRET;
 const PORT = process.env.PORT;
 
 // define middle ware to use in server
-const app = express(); //make instance of express server
-app.use(cors()); // use the middleware cors
+const server = express(); //make instance of express server
+server.use(cors()); // use the middleware cors
 // server static file in the public directory
-app.use(express.json({ limit:'10kb' })); // use json middleware 
-app.use('/public', express.static(path.join('/home/telix/Makipura/backend', 'public')));
+server.use(express.json({ limit:'10kb' })); // use json middleware 
+server.use('/public', express.static(path.join('/home/telix/Makipura/backend', 'public')));
 //server.use(express.urlencoded());
 
 // connect the mongo connect with our session
@@ -54,7 +54,7 @@ const mongoStore = new mongoSession({
 });
 
 // Server add middleware session 
-app.use(session({  // define value for the session 
+server.use(session({  // define value for the session 
 		secret: ENV.MIDDELWARE_SECRET,  
 		name: ENV.COOKIE_NAME, 
 		cookie : { 
@@ -83,7 +83,7 @@ const credentials = {
 		cert: fs.readFileSync('cert.pem')
 };
 // create https server
-const httpServer = createServer(credentials, app);
+const httpServer = createServer(credentials, server);
 
 // initialize socket io 
 const io = new Server(httpServer, { 
@@ -97,34 +97,34 @@ const io = new Server(httpServer, {
 initializeSocket(io);
 
 // inizilized password autheticifcation middleware
-app.use(passport.initialize());
-app.use(passport.session());
+server.use(passport.initialize());
+server.use(passport.session());
 
 // Define Routes here
 // define routes for users,
-app.use('/user', userRouter);
+server.use('/user', userRouter);
 // define routes to stores here
-app.use('/store', storeRouter);
+server.use('/store', storeRouter);
 // define routes to posts here
-app.use('/post', postRouter);
+server.use('/post', postRouter);
 // defined routes for authorization
-app.use('/auth', authRouter);
+server.use('/auth', authRouter);
 // define routes for payment 
-app.use('/payment', paymentRouter);
+server.use('/payment', paymentRouter);
 // route for message 
-//app.use('/messages', messagesRouter);
+//server.use('/messages', messagesRouter);
 // recover password
-app.use('/recovery', passwordRecoveryRouter);
+server.use('/recovery', passwordRecoveryRouter);
 // emai verification 
-app.use('/email-verification', passwordRecoveryRouter);
+server.use('/email-verification', passwordRecoveryRouter);
 // define routes for converstion 
 // define routes for messages
 // define a global route thath catches any get requests
-app.use('*', (req,res) => { res.status(404).json({error: "not found"}); })
+server.use('*', (req,res) => { res.status(404).json({error: "not found"}); })
 
 httpServer.listen(PORT, 
 		console.log('http server listen on https://localhost:' + PORT)
 );
 
-export default app;
+export default server;
 

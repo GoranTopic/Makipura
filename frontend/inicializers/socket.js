@@ -1,12 +1,10 @@
 import io from "socket.io-client/dist/socket.io"; 
+//import Config from "react-native-config";
 
 export default function initSocket() {
-		const socket = io( 
-				//"http://10.0.0.3:3000", // home
-				//'http://192.168.1.219:3000', // celiant
-				'http://192.168.1.193:5000', // gf place
-				{ jsonp: false }
-		);
+		//console.log('BASE_API:');
+		//console.log(Config);
+		const socket = io( 'http://192.168.1.193:5000', { jsonp: false } );
 
 		if(socket){
 				console.log("from inicilizer socket")

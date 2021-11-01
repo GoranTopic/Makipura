@@ -54,8 +54,7 @@ const loadMessagesRegister = socket => {
 		});
 }
 
-
-export default function initializeSocket( io ){
+export default function initializeSocket(io){
 		io.use(middlewareFunction);
 		io.on("connection", socket => {
 				getUsersRegister(socket, io);

@@ -1,6 +1,8 @@
 import initSocket from './socket.js';
+//import loginUser from './login';
 
 function inicialize(){
+	//	login 
 
 		return {
 				username: null,

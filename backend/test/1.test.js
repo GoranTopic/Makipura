@@ -6,7 +6,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import request from 'supertest';
 import dotenv from 'dotenv';
-import app from '../app.js';
+import sever from '../server.js';
 let should = chai.should();
 var expect = chai.expect;
 
@@ -15,7 +15,7 @@ const env = process.env;
 
 chai.use(chaiHttp);
 
-const agent = chai.request.agent(app);
+const agent = chai.request.agent(server);
 
 
 describe('Testing basic getters', () => {
@@ -29,7 +29,7 @@ describe('Testing basic getters', () => {
 
 
 		it('query all stores', done => {
-				chai.request(app)
+				chai.request(server)
 						.get('/store/all')
 						.end((err, res) => {
 								res.should.have.status(200);
@@ -43,7 +43,7 @@ describe('Testing basic getters', () => {
 
 
 		it('query all users', done => {
-				chai.request(app)
+				chai.request(server)
 						.get('/user/all')
 						.end((err, res) => {
 								res.should.have.status(200);
@@ -55,7 +55,7 @@ describe('Testing basic getters', () => {
 		});
 
 		it('query all posts', done => {
-				chai.request(app)
+				chai.request(server)
 						.get('/post/')
 						.end((err, res) => {
 								res.should.have.status(200);

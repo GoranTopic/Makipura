@@ -1,11 +1,11 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../app.js';
+import server from '../server.js';
 var expect = chai.expect;
 
 chai.use(chaiHttp);
 
-const agent = chai.request.agent(app);
+const agent = chai.request.agent(server);
 
 describe('CRUD Post', function() {
 		before( async () => {
