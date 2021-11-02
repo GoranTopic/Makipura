@@ -12,6 +12,7 @@ const authRouter = express.Router(); // get express router
 
 authRouter.route('/signin')
 		.post( 
+				(req, res, next) => { console.log(req.body); next()},
 				multiFormHandler,
 				cleanProperties,
 				// require user to log out before signing in

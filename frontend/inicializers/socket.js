@@ -1,13 +1,13 @@
 import io from "socket.io-client/dist/socket.io"; 
-//import Config from "react-native-config";
+import { BASE_API } from '@env';
 
 export default function initSocket() {
-		//console.log('BASE_API:');
-		//console.log(Config);
-		const socket = io( 'http://192.168.1.193:5000', { jsonp: false } );
+		console.log("[from inicilizer socket]")
+		console.log('BASE_API:');
+		console.log(BASE_API);
+		const socket = io( BASE_API, { jsonp: false } );
 
 		if(socket){
-				console.log("from inicilizer socket")
 				console.log("got socket:");
 				//console.log(socket);
 				//props.setSocket(socket);
