@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useCallback } from 'react';
 import { signin } from '../queries/auth.js'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+<<<<<<< HEAD
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -59,6 +60,26 @@ const LoginScreen = ({ setUser, navigation }) => {
 				} )
 		}
 								
+=======
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faEye,faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
+const EyeSlash = <FontAwesomeIcon className="icon" icon ={faEyeSlash}/>;
+
+export default function LoginScreen({ socket, route, navigation }){
+		const [username, onChangeUsername] = useState("");
+		const [password, onChangePassword] = useState("");
+		const [showPass, setShowPass] = useState(false);
+		const [error, setError] = useState({ value: false, msg: '' });
+		console.log("showPass");
+		console.log(showPass);
+		const toogleShowpass = () =>{
+				console.log("this ran");
+				console.log(showPass);
+				setShowPass(!showPass);
+		}
+>>>>>>> 0fa8268527893c762f4a3c32ce3617eae2e30d90
 						
 		return <View style={styles.container}>
 				<StatusBar style="auto"/>
@@ -74,6 +95,7 @@ const LoginScreen = ({ setUser, navigation }) => {
 								<TextInput
 										onChangeText={onChangePassword}
 										value={password}
+<<<<<<< HEAD
 										secureTextEntry={!showPass}
 										placeholder="password" />
 								<TouchableOpacity onPress={toogleShowpass}>
@@ -92,6 +114,22 @@ const LoginScreen = ({ setUser, navigation }) => {
 								<Text stye={{ color: 'red' }}> 
 										{error} 
 								</Text>}
+=======
+										secureTextEntry={showPass}
+										placeholder="password" />
+								{showPass ?
+										<TouchableOpacity onPress={toogleShowpass}>
+												<FontAwesomeIcon className="icon" icon={faEye} />
+										</TouchableOpacity> :
+										<TouchableOpacity onPress={toogleShowpass}>
+												<FontAwesomeIcon className="icon" icon ={faEyeSlash}/>
+										</TouchableOpacity>}
+						</View>
+						<Button 
+								title="Login"
+								onPress={()=>{}}
+						/>
+>>>>>>> 0fa8268527893c762f4a3c32ce3617eae2e30d90
 						<Button 
 								title="signup"
 								onPress={()=>{ navigation.navigate('Signup') }}
@@ -111,7 +149,11 @@ const styles = StyleSheet.create({
 		},
 		input: {
 				height: 40,
+<<<<<<< HEAD
 				width: 140,
+=======
+				width: 145,
+>>>>>>> 0fa8268527893c762f4a3c32ce3617eae2e30d90
 				margin: 12,
 				flexDirection: "row",
 				borderRadius: 10,
