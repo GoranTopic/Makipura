@@ -29,7 +29,10 @@ const signin = async ({ username, password }) =>
 										decodeValues: true  // default: true
 								});
 								return { success: true, cookie: cookie };
-						}else throw res;
+						}else{
+								console.log("this ran");
+								console.log(res.data)
+						} 
 				})
 				.catch( error => { // handle error
 						throw error;

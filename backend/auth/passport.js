@@ -22,19 +22,18 @@ const customFields = {
 		passwordField: "password"
 }
 
-const verifyLocalCallback = (username, password, done) => {
+const verifyLocalCallback = (username, password, done) => 
 		/* this function that check is the passwod is true*/
 		userModel.findOne({ username: username }).select("+password")
 				.then( (user) => {
-						if(user) bcrypt.compare(password, user.password, (error, same) =>{
-								if(same){
-										done(null, user); // password matched
-								}else{ // if password does not match 
-										done(null, false);
-								}
-						});
-				}).catch(e => done(e)); //pass any errors to passport
-}
+						if(user)  
+								bcrypt.compare(password, user.password, (error, same) =>{
+										if(same) done(null, user); // password matched
+										else done(null, false); // if password does not match 
+								});
+						else done(null, false);
+				}).catch(e => done(e, false)); //pass any errors to passport
+
 
 // create a new local strategy intance, with the fileds and verify callback
 const localStrategy = new LocalStrategy(customFields, verifyLocalCallback);

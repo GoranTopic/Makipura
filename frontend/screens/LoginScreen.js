@@ -61,11 +61,11 @@ const LoginScreen = ({ setUser, navigation }) => {
 						setLoading(false);
 				}).catch( err => {
 						console.log(err.message);
-						if(err.response.data){ 
-								console.log(err.response);
+						console.log(err.response);
+						if(err.response)
 								seToastError({ text1: err.response.data });
-								setError(err.message)
-						}
+						else if(err.message)
+								seToastError({ text1: err.message });
 						setLoading(false);
 				} )
 		}
