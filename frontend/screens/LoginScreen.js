@@ -3,7 +3,6 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useCallback } from 'react';
 import { signin } from '../queries/auth.js'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-<<<<<<< HEAD
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -23,11 +22,20 @@ const LoginScreen = ({ setUser, navigation }) => {
 
 		const toogleShowpass = () => setShowPass(!showPass);
 
+		const seToastError = ({text1, text2}) => 
+				Toast.show({
+						type: 'error',
+						text1: text1,
+						text2: text2,
+						topOffset: 100,
+				});
+
 		React.useEffect(() => {
 				Toast.show({
-						type: 'success',
+						type: 'error',
 						text1: 'Hello',
-						text2: 'This is some something 👋'
+						text2: 'This is some something 👋',
+						topOffset: 100,
 				});
 		}, []);
 
@@ -48,39 +56,20 @@ const LoginScreen = ({ setUser, navigation }) => {
 								setLoading(false);
 						}
 				}).then( result => {
-						console.log("secone then ran with:");
+						console.log("second then ran with:");
 						console.log(result)
 						setLoading(false);
 				}).catch( err => {
 						console.log(err.message);
-						console.log(err.name);
-						if(err.name)
-						setError(err.message)
+						if(err.response.data){ 
+								console.log(err.response);
+								seToastError({ text1: err.response.data });
+								setError(err.message)
+						}
 						setLoading(false);
 				} )
 		}
-								
-=======
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faEye,faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
-const EyeSlash = <FontAwesomeIcon className="icon" icon ={faEyeSlash}/>;
-
-export default function LoginScreen({ socket, route, navigation }){
-		const [username, onChangeUsername] = useState("");
-		const [password, onChangePassword] = useState("");
-		const [showPass, setShowPass] = useState(false);
-		const [error, setError] = useState({ value: false, msg: '' });
-		console.log("showPass");
-		console.log(showPass);
-		const toogleShowpass = () =>{
-				console.log("this ran");
-				console.log(showPass);
-				setShowPass(!showPass);
-		}
->>>>>>> 0fa8268527893c762f4a3c32ce3617eae2e30d90
-						
 		return <View style={styles.container}>
 				<StatusBar style="auto"/>
 				<SafeAreaView>
@@ -95,7 +84,6 @@ export default function LoginScreen({ socket, route, navigation }){
 								<TextInput
 										onChangeText={onChangePassword}
 										value={password}
-<<<<<<< HEAD
 										secureTextEntry={!showPass}
 										placeholder="password" />
 								<TouchableOpacity onPress={toogleShowpass}>
@@ -106,30 +94,14 @@ export default function LoginScreen({ socket, route, navigation }){
 						{ loading?  
 								<DotsLoader size={20}
 										betweenSpace={7} />:
-								<Button 
-										title="Login"
-										onPress={handleSignin}
-								/>}
+												<Button 
+														title="Login"
+														onPress={handleSignin}
+												/>}
 						{ error && 
 								<Text stye={{ color: 'red' }}> 
 										{error} 
 								</Text>}
-=======
-										secureTextEntry={showPass}
-										placeholder="password" />
-								{showPass ?
-										<TouchableOpacity onPress={toogleShowpass}>
-												<FontAwesomeIcon className="icon" icon={faEye} />
-										</TouchableOpacity> :
-										<TouchableOpacity onPress={toogleShowpass}>
-												<FontAwesomeIcon className="icon" icon ={faEyeSlash}/>
-										</TouchableOpacity>}
-						</View>
-						<Button 
-								title="Login"
-								onPress={()=>{}}
-						/>
->>>>>>> 0fa8268527893c762f4a3c32ce3617eae2e30d90
 						<Button 
 								title="signup"
 								onPress={()=>{ navigation.navigate('Signup') }}
@@ -149,11 +121,7 @@ const styles = StyleSheet.create({
 		},
 		input: {
 				height: 40,
-<<<<<<< HEAD
 				width: 140,
-=======
-				width: 145,
->>>>>>> 0fa8268527893c762f4a3c32ce3617eae2e30d90
 				margin: 12,
 				flexDirection: "row",
 				borderRadius: 10,

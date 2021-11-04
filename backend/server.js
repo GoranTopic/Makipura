@@ -62,7 +62,7 @@ server.use(session({  // define value for the session
 				maxAge: 1000   * 60                 * 60                 * 24 
 		},
 		resave: true, // for every reques to he server, resets the session cookie
-		saveUninitialized: true, // Do not save the session after is has not been modified
+		saveUninitialized: false, // Do not save the session after is has not been modified
 		store: mongoStore,
 }));
 
