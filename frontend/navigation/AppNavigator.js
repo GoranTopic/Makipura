@@ -1,5 +1,6 @@
 import React  from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import Toast from 'react-native-toast-message'
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js'
 import LoggedInRootStack from './LoggedInRootStack.js';
@@ -15,6 +16,7 @@ const AppNavigator = props =>  {
 								user.isSignedIn?
 								<LoggedInRootStack/> :
 								<SignInRootStack/> }
+						<Toast ref={(ref) => Toast.setRef(ref)} />
 				</NavigationContainer>
 		</>
 }

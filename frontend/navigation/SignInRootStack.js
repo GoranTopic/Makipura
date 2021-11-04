@@ -12,7 +12,8 @@ const Tab = createMaterialTopTabNavigator();
 
 const BottomTabs = () => (
 		<>
-				<Tab.Navigator tabBarPosition="bottom" initialRouteName="Signup">
+				<Tab.Navigator tabBarPosition="bottom"
+						initialRouteName="Signup">
 						<Tab.Screen 
 								name="Signup"
 								options={{ headerShown: false }}>
@@ -63,12 +64,12 @@ const SignInRootStack = () => (
 						/>
 						<Stack.Screen 
 								name="Login"
-								options={{ headerShown: false }} >
+								options={{ headerShown: true }} >
 								{ props => <LoginScreen {...props} /> }
 						</Stack.Screen>
 						<Stack.Screen 
 								name="Signup"
-								options={{ headerShown: false }} >
+								options={{ headerShown: true }} >
 								{ props => <SignupScreen {...props} /> }
 						</Stack.Screen>
 				</Stack.Navigator>  

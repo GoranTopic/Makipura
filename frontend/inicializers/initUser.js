@@ -1,19 +1,16 @@
 import initSocket from './socket.js';
-
 //import loginUser from './login';
 
-
-function inicialize(){
+export default initUser = {
 		// user data from memory,
 		// 		validate cookie with server
 		// get coockie from memory
 		// check cookie 
-		return {
-				username: null,
-				socket: initSocket(),
-				isSignedIn: false,
-				cookie: null,
-		}
+		username: null,
+		firstname: null,
+		latname: null,
+		socket: initSocket(),
+		isSignedIn: false,
+		cookie: null,
 }
 
-export default inicialize;
