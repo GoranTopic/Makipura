@@ -1,29 +1,29 @@
 export const setSocket = store => ({
 		type: 'SET_STORE',
-		action: { payload: store },
+		payload: store,
 });
 
 export const setUser = user => ({
 		type: 'SET_USER',
-		action: { payload: user },
+		payload: user,
 })
 
 export const setCookie = cookie => ({
 		type: 'SET_COOKIE',
-		action: { payload: cookie },
+		payload: cookie,
 });
 
 export const setState = state => ({
 		type: 'SET_STATE',
-		action: { payload: state },
+		payload: state,
 });
 
 export const setAppError = isError => ({
 		type: 'SET_IS_ERROR',
-		action: { payload: isError },
+		payload: isError,
 });
 
 export const setAppIsLoading = isLoading => ({
 		type: 'SET_IS_LOADING',
-		action: { payload: isLoading },
+		payload: isLoading,
 });

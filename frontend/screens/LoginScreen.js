@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEye,faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import {  DotsLoader, } from 'react-native-indicator';
+import { DotsLoader, } from 'react-native-indicator';
 import Toast from 'react-native-toast-message';
+import LoadingButton from '../components/buttons/LoadingButton.js'
 
 const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 const EyeSlash = <FontAwesomeIcon className="icon" icon ={faEyeSlash}/>;
@@ -17,12 +18,11 @@ const LoginScreen = ({ setUser, navigation }) => {
 		const [username, onChangeUsername] = useState("");
 		const [password, onChangePassword] = useState("");
 		const [showPass, setShowPass] = useState(false);
-		const [error, setError] = useState(null);
 		const [loading, setLoading] = useState(false);
 
 		const toogleShowpass = () => setShowPass(!showPass);
 
-		const seToastError = ({text1, text2}) => 
+		const setToastError = ({text1, text2}) => 
 				Toast.show({
 						type: 'error',
 						text1: text1,
@@ -30,14 +30,13 @@ const LoginScreen = ({ setUser, navigation }) => {
 						topOffset: 100,
 				});
 
-		React.useEffect(() => {
+		const setToastSuccess = ({text1, text2}) => 
 				Toast.show({
-						type: 'error',
-						text1: 'Hello',
-						text2: 'This is some something 👋',
+						type: 'success',
+						text1: text1,
+						text2: text2,
 						topOffset: 100,
 				});
-		}, []);
 
 		const handleSignin = async () => {  
 				setLoading(true);
@@ -45,27 +44,21 @@ const LoginScreen = ({ setUser, navigation }) => {
 						username: username,
 						password: password,
 				}).then(result => {
-						if(result.suceess){
-								setUser({
-										username: username, 
-										cookie: result.cookie
-								});
-								setLoading(false);
-						}else { 
-								setError(result.msg);
-								setLoading(false);
-						}
-				}).then( result => {
-						console.log("second then ran with:");
-						console.log(result)
 						setLoading(false);
+						setToastSuccess({ 
+								text1: `Logined is as ${username}`
+						});
+						setUser({
+								//username: result.config.data.username, 
+								username: username, 
+								cookie: result.cookie,
+						});
 				}).catch( err => {
-						console.log(err.message);
-						console.log(err.response);
+						console.error(err);
 						if(err.response)
-								seToastError({ text1: err.response.data });
+								setToastError({ text1: err.response.data });
 						else if(err.message)
-								seToastError({ text1: err.message });
+								setToastError({ text1: err.message });
 						setLoading(false);
 				} )
 		}
@@ -78,6 +71,7 @@ const LoginScreen = ({ setUser, navigation }) => {
 								style={styles.input}
 								onChangeText={onChangeUsername}
 								placeholder="username"
+								autoCapitalize="none"
 								value={username}
 						/>
 						<View style={styles.input}>
@@ -91,6 +85,10 @@ const LoginScreen = ({ setUser, navigation }) => {
 												icon ={ showPass? faEye : faEyeSlash }/>
 								</TouchableOpacity> 
 						</View>
+						<LoadingButton
+								title="Login"
+								onPress={handleSignin}
+						/>
 						{ loading?  
 								<DotsLoader size={20}
 										betweenSpace={7} />:
@@ -98,10 +96,6 @@ const LoginScreen = ({ setUser, navigation }) => {
 														title="Login"
 														onPress={handleSignin}
 												/>}
-						{ error && 
-								<Text stye={{ color: 'red' }}> 
-										{error} 
-								</Text>}
 						<Button 
 								title="signup"
 								onPress={()=>{ navigation.navigate('Signup') }}

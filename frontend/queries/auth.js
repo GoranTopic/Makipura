@@ -1,5 +1,5 @@
 import setCookie from 'set-cookie-parser';
-import axios from './axios.js';
+import axios from './axios-config.js';
 
 const checkCookie = async (cookie, username = null)  => 
 		await axios.get('/user/whoami', { }, { 
@@ -23,16 +23,15 @@ const signin = async ({ username, password }) =>
 						"username": username, //auto seting the cookie value
 						"password": password,
 				}, { withCredentials: false })
-				.then( res => { // handle success
-						if(res.data.status === "success"){
-								let cookie = setCookie.parse(res, {
-										decodeValues: true  // default: true
-								});
-								return { success: true, cookie: cookie };
-						}else{
-								console.log("this ran");
-								console.log(res.data)
-						} 
+				.then( res => { // this only run with status 200
+						let cookie = setCookie.parse(res, {
+								decodeValues: true,  // default: true
+								map: true
+						});
+						return { 
+								data: res.data.status, 
+								cookie: cookie["maki-cookie"],
+						};
 				})
 				.catch( error => { // handle error
 						throw error;

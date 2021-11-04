@@ -13,11 +13,11 @@ const Tab = createMaterialTopTabNavigator();
 const BottomTabs = () => (
 		<>
 				<Tab.Navigator tabBarPosition="bottom"
-						initialRouteName="Signup">
+						initialRouteName="Login">
 						<Tab.Screen 
-								name="Signup"
-								options={{ headerShown: false }}>
-								{ props => <SignupScreen {...props} /> }
+								name="Login"
+								options={{ headerShown: false }} >
+								{ props => <LoginScreen {...props} /> }
 						</Tab.Screen>
 						<Tab.Screen 
 								name="Home"

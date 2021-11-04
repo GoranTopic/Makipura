@@ -3,12 +3,12 @@ import initUser from '../inicializers/initUser.js';
 const userReducer = (state = initUser, action) => {
 		switch (action.type) {
 				case 'SET_USER':
-						console.log("got in the reducer payload: ");
-						console.log(action.payload);
-						state.isSignIn = true;
-						state.cookie = action.payload.cookie;
-						state.username = action.payload.username;
-						return  state
+						return { 
+								...state, 
+								isSignedIn: true,
+								cookie: action.payload.cookie, 
+								username: action.payload.username 
+						};
 				case 'SET_STATE':
 						state.stateReducer = action.payload;
 						return  state;

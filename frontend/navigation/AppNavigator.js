@@ -6,17 +6,15 @@ import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js'
 import LoggedInRootStack from './LoggedInRootStack.js';
 import SignInRootStack from './SignInRootStack.js';
 
-const AppNavigator = props =>  {  	
-		//console.log("getting props state from AppNavigator: ");
-		//console.log(props);
-		const { user } = props.state;
+const AppNavigator = ({ state }) =>  {  	
+		const { isSignedIn }  = state.user; // get state of user
 		return <>
 				<NavigationContainer>     
-						{ //props.state.isLoggedIn? 
-								user.isSignedIn?
-								<LoggedInRootStack/> :
-								<SignInRootStack/> }
-						<Toast ref={(ref) => Toast.setRef(ref)} />
+						{ isSignedIn?
+								<LoggedInRootStack/> : // render if user is logged in
+								<SignInRootStack/>  // render is not logged in
+						}
+						<Toast ref={ ref => Toast.setRef(ref)} />
 				</NavigationContainer>
 		</>
 }
