@@ -1,15 +1,18 @@
-import { StyleSheet, Text,  View, TouchableOpacity, Button, TextInput } from 'react-native';
+import { StyleSheet, Text,  View, TouchableOpacity, TextInput } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useCallback } from 'react';
 import { signin } from '../queries/auth.js'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../state/mappers.js';
+import Divider from 'react-native-divider';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEye,faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { DotsLoader, } from 'react-native-indicator';
 import Toast from 'react-native-toast-message';
 import LoadingButton from '../components/buttons/LoadingButton.js'
+import Button from '../components/buttons/button.js'
+import colors from '../config/colors.js'
 
 const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 const EyeSlash = <FontAwesomeIcon className="icon" icon ={faEyeSlash}/>;
@@ -66,7 +69,7 @@ const LoginScreen = ({ setUser, navigation }) => {
 		return <View style={styles.container}>
 				<StatusBar style="auto"/>
 				<SafeAreaView>
-						<Text>Login Screen</Text>
+						<Text>Login</Text>
 						<TextInput
 								style={styles.input}
 								onChangeText={onChangeUsername}
@@ -85,19 +88,13 @@ const LoginScreen = ({ setUser, navigation }) => {
 												icon ={ showPass? faEye : faEyeSlash }/>
 								</TouchableOpacity> 
 						</View>
-						<LoadingButton
-								title="Login"
-								onPress={handleSignin}
-						/>
-						{ loading?  
-								<DotsLoader size={20}
-										betweenSpace={7} />:
-												<Button 
-														title="Login"
-														onPress={handleSignin}
-												/>}
-						<Button 
-								title="signup"
+						<LoadingButton title="Login"
+								onPress={handleSignin} />
+						<Divider orientation={'center'}>with</Divider>
+
+						<Divider orientation={'center'}>or</Divider>
+						<Button onlyText={true}
+								title="Create Account"
 								onPress={()=>{ navigation.navigate('Signup') }}
 						/>
 				</SafeAreaView>
@@ -118,10 +115,21 @@ const styles = StyleSheet.create({
 				width: 140,
 				margin: 12,
 				flexDirection: "row",
-				borderRadius: 10,
 				justifyContent: "space-between",
+				borderRadius: 10,
 				borderWidth: 1,
 				padding: 10,
+		},
+		signupTxt: {
+				color: colors.btnGreen,
+				fontSize: 14,
+		},
+		signupBtn: {
+				elevation: 0,
+				borderWidth: 0,
+				borderColor:  'transparent',
+				backgroundColor: 'transparent',
+				justifyContent: "space-between",
 		},
 });
 

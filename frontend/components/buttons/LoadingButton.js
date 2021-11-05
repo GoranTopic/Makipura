@@ -1,27 +1,51 @@
 /* a button that when pressed diplayes a loding animation */
-import { View, Button, Text } from 'react-native';
+import { StyleSheet, View, Pressable, Text } from 'react-native';
 import React, { useState } from 'react';
-import { DotsLoader, } from 'react-native-indicator';
+import Button from './button.js';
+import { DotsLoader } from 'react-native-indicator';
+import colors from '../../config/colors.js';
 
 export default function LoadingButton(props){
 		const [loading, setLoading] = useState(false);
-		const { title, onPress, loader } = props;
+		const { 
+				title = "button",
+				onPress,
+				Loader = DotsLoader,
+				styleButton = {},
+				styleText = {},
+				styleLoader = {},
+		} = props;
 		
 		const handlePress = async () => {
 				setLoading(true);
 				await onPress()
-						.then(setLoading(true));
+						.then(setLoading(false));
 		}
 		
 		return(
-				<View> 
+				<View style={styles.container}>  
 						{ loading?
-								<DotsLoader size={20}
-										betweenSpace={7} /> :
-								<Button title={title}
-										onPress={handlePress}/> } 
+								<Loader color={colors.btnGreen}
+										size={16}
+										betweenSpace={7}
+										{...props} /> :
+								<Button 
+										styleText={styleText}
+										styleButton={styleButton} 
+										title={title}
+										onPress={handlePress} 
+										{...props} /> 
+						} 
 				</View> 
 		);
 
 }
-				
+
+const styles = StyleSheet.create({
+		container: {
+				backgroundColor: '#fff',
+				alignItems: 'center',
+				justifyContent: 'center',
+		},
+});
+	
