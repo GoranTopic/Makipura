@@ -11,8 +11,10 @@ import { faEye,faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { DotsLoader, } from 'react-native-indicator';
 import Toast from 'react-native-toast-message';
 import LoadingButton from '../components/buttons/LoadingButton.js'
-import Button from '../components/buttons/button.js'
-import colors from '../config/colors.js'
+import ValidatingTextInput from '../components/text-inputs/ValidatingTextInput.js'
+import PasswordTextInput from '../components/text-inputs/PasswordTextInput.js';
+import Button from '../components/buttons/button.js';
+import colors from '../config/colors.js';
 
 const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 const EyeSlash = <FontAwesomeIcon className="icon" icon ={faEyeSlash}/>;
@@ -70,28 +72,21 @@ const LoginScreen = ({ setUser, navigation }) => {
 				<StatusBar style="auto"/>
 				<SafeAreaView>
 						<Text>Login</Text>
-						<TextInput
+						<ValidatingTextInput
 								style={styles.input}
 								onChangeText={onChangeUsername}
+								validate={false}
 								placeholder="username"
 								autoCapitalize="none"
 								value={username}
 						/>
-						<View style={styles.input}>
-								<TextInput
-										onChangeText={onChangePassword}
-										value={password}
-										secureTextEntry={!showPass}
-										placeholder="password" />
-								<TouchableOpacity onPress={toogleShowpass}>
-										<FontAwesomeIcon className="icon"
-												icon ={ showPass? faEye : faEyeSlash }/>
-								</TouchableOpacity> 
-						</View>
+						<PasswordTextInput 
+								styleContainer={styles.input}
+								onChangeText={onChangePassword}
+								value={password}/>
 						<LoadingButton title="Login"
 								onPress={handleSignin} />
 						<Divider orientation={'center'}>with</Divider>
-
 						<Divider orientation={'center'}>or</Divider>
 						<Button onlyText={true}
 								title="Create Account"
@@ -119,17 +114,6 @@ const styles = StyleSheet.create({
 				borderRadius: 10,
 				borderWidth: 1,
 				padding: 10,
-		},
-		signupTxt: {
-				color: colors.btnGreen,
-				fontSize: 14,
-		},
-		signupBtn: {
-				elevation: 0,
-				borderWidth: 0,
-				borderColor:  'transparent',
-				backgroundColor: 'transparent',
-				justifyContent: "space-between",
 		},
 });
 

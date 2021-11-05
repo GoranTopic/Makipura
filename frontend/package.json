@@ -46,7 +46,8 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "set-cookie-parser": "^2.4.8",
-    "socket.io-client": "^4.3.2"
+    "socket.io-client": "^4.3.2",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
