@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, View, TextInput } from 'react-native';
 import { faEye,faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 const EyeSlash = <FontAwesomeIcon className="icon" icon ={faEyeSlash}/>;
@@ -29,10 +29,11 @@ export default function PasswordTextInput(props){
 								secureTextEntry={!showPass}
 								placeholder="password"
 						/>
-						<TouchableOpacity onPress={toogleShowpass}>
+						<TouchableOpacity onPress={toogleShowpass}
+								style={iconStyles} >
 								<FontAwesomeIcon 
-										style={iconStyles}
 										className="icon"
+										size={18}
 										icon ={ showPass? faEye : faEyeSlash }/>
 						</TouchableOpacity> 
 				</View>
@@ -45,8 +46,12 @@ const styles = StyleSheet.create({
 				justifyContent: 'space-between',
 		},
 		textInput: {
+				alignSelf: 'stretch',
+				width: '85%',
 		},
 		icon:{
+				paddingRight: 2,
+				alignSelf:'center',
 		},
 });
 

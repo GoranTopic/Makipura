@@ -30,6 +30,7 @@
     "react-native-divider": "^1.0.3",
     "react-native-dotenv": "^3.2.0",
     "react-native-gifted-chat": "^0.16.3",
+    "react-native-google-signin": "^2.1.1",
     "react-native-indicator": "^1.2.2",
     "react-native-pager-view": "5.0.12",
     "react-native-paper": "^4.9.2",
@@ -47,7 +48,9 @@
     "redux-thunk": "^2.3.0",
     "set-cookie-parser": "^2.4.8",
     "socket.io-client": "^4.3.2",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "expo-auth-session": "~3.3.1",
+    "expo-random": "~11.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
