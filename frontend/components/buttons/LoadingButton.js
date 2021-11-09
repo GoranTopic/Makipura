@@ -1,7 +1,7 @@
 /* a button that when pressed diplayes a loding animation */
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import React, { useState } from 'react';
-import Button from './button.js';
+import Button from './Button.js';
 import { DotsLoader } from 'react-native-indicator';
 import colors from '../../config/colors.js';
 

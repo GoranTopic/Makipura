@@ -7,51 +7,51 @@ const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 const EyeSlash = <FontAwesomeIcon className="icon" icon ={faEyeSlash}/>;
 
 export default function PasswordTextInput(props){
-		const [showPass, setShowPass] = useState(false);
-		const toogleShowpass = () => setShowPass(!showPass);
+    const [showPass, setShowPass] = useState(false);
+    const toogleShowpass = () => setShowPass(!showPass);
 
-		const { 
-				styleTextInput = {}, 
-				styleContainer = {},
-				styleIcon = {},
-		} = props; 
+    const { 
+        styleTextInput = {}, 
+        styleContainer = {},
+        styleIcon = {},
+    } = props; 
 
-		const containerStyles = [ styles.container,  styleContainer ];
-		const textInputStyles = [ styles.textInput,  styleTextInput ];
-		const iconStyles = [ styles.icon,  styleIcon ];
+    const containerStyles = [ styles.container,  styleContainer ];
+    const textInputStyles = [ styles.textInput,  styleTextInput ];
+    const iconStyles = [ styles.icon,  styleIcon ];
 
 
-		return(  
-				<View style={containerStyles}>
-						<TextInput
-								{...props}
-								style={textInputStyles}
-								secureTextEntry={!showPass}
-								placeholder="password"
-						/>
-						<TouchableOpacity onPress={toogleShowpass}
-								style={iconStyles} >
-								<FontAwesomeIcon 
-										className="icon"
-										size={18}
-										icon ={ showPass? faEye : faEyeSlash }/>
-						</TouchableOpacity> 
-				</View>
-		);
+    return(
+        <View style={containerStyles}>
+            <TextInput
+                {...props}
+                style={textInputStyles}
+                secureTextEntry={!showPass}
+                placeholder="password"
+            />
+            <TouchableOpacity onPress={toogleShowpass}
+                style={iconStyles} >
+                <FontAwesomeIcon 
+                    className="icon"
+                    size={18}
+                    icon ={ showPass? faEye : faEyeSlash }/>
+            </TouchableOpacity> 
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-		container: {
-				flexDirection:'row',
-				justifyContent: 'space-between',
-		},
-		textInput: {
-				alignSelf: 'stretch',
-				width: '85%',
-		},
-		icon:{
-				paddingRight: 2,
-				alignSelf:'center',
-		},
+    container: {
+        flexDirection:'row',
+        justifyContent: 'space-between',
+    },
+    textInput: {
+        alignSelf: 'stretch',
+        width: '85%',
+    },
+    icon:{
+        paddingRight: 2,
+        alignSelf:'center',
+    },
 });
 

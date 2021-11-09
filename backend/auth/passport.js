@@ -32,7 +32,7 @@ const verifyLocalCallback = (username, password, done) =>
 										else done(null, false); // if password does not match 
 								});
 						else done(null, false);
-				}).catch(e => done(e, false)); //pass any errors to passport
+				}).catch(e => done(e)); //pass any errors to passport
 
 
 // create a new local strategy intance, with the fileds and verify callback
