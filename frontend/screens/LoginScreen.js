@@ -19,6 +19,7 @@ import colors from '../config/colors.js';
 const LoginScreen = ({ setUser, navigation }) => {
     const [username, onChangeUsername] = useState("");
     const [password, onChangePassword] = useState("");
+    const [failed, setFailed] = useState(false);
 
     const handleSignin = async () => {  
         await signin({ 
@@ -36,6 +37,7 @@ const LoginScreen = ({ setUser, navigation }) => {
                 errorToast({ text1: err.response.data });
             else if(err.message)
                 errorToast({ text1: err.message });
+            setFailed(true);
         } )
     }
 
@@ -60,6 +62,12 @@ const LoginScreen = ({ setUser, navigation }) => {
             <LoadingButton title="Login"
                 styleButton={styles.horizontalMargin}
                 onPress={handleSignin} />
+            { failed?
+                <Button onlyText={true}
+                    styleText={styles.recoveryFont}
+                    title="forgot Password?"
+                    onPress={()=>{ navigation.navigate('Recovery') }} />
+                    : <></> }
             <Divider style={styles.horizontalMarginDivider}
                 orientation={'center'}>with</Divider>
             <View style={styles.row}>
@@ -73,6 +81,13 @@ const LoginScreen = ({ setUser, navigation }) => {
                 title="Create Account"
                 onPress={()=>{ navigation.navigate('Signup') }}
             />
+            <View style={{
+                alignText:'center',
+                justifyContent:'center',
+                alignItems: 'center', 
+                backgroundColor: 'pink',
+            }}>
+            </View>
         </SafeAreaView>
     </View>
 }
@@ -82,11 +97,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //flexDirection: 'row',
         backgroundColor: '#fff',
         alignItems: 'center',
-        //alignContent: 'space-around',
-        //justifyContent: 'space-evenly',
     },
     row:{
         flexDirection: 'row',
@@ -115,10 +127,13 @@ const styles = StyleSheet.create({
     signUpBtn:{
         fontSize: 17,
     },
+    recoveryFont:{
+        fontSize: 16,
+    },
     titleFont: {
         fontSize: 25,
         fontWeight: 'bold',
-        color: colors.btnGreen, 
+        color: colors.btnGreen,
         marginLeft: 25,
         marginTop: 30,
     },
